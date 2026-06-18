@@ -75,7 +75,9 @@ App.setActiveTab = (tabName) => {
   App.$("prevTabBtn").disabled = currentIndex === 0;
 
   const nextLabel = App.$("nextTabBtn").querySelector("span");
-  if (nextLabel) nextLabel.textContent = isLast ? "Preview" : "Next";
+  if (nextLabel) nextLabel.textContent = isLast
+    ? (window.innerWidth <= 767 ? "Preview" : "Back to Start")
+    : "Next";
 
   App.updateTabProgress();
 };
@@ -84,7 +86,11 @@ App.goToNextTab = () => {
   const currentIndex = App.tabOrder.indexOf(App.state.activeTab);
   if (currentIndex === App.tabOrder.length - 1) {
     const previewBtn = document.getElementById("mptbPreviewBtn");
-    if (previewBtn) previewBtn.click();
+    if (previewBtn) {
+      previewBtn.click();
+    } else {
+      App.setActiveTab(App.tabOrder[0]);
+    }
     return;
   }
   App.setActiveTab(App.tabOrder[currentIndex + 1]);
