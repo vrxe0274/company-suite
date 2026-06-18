@@ -1,4 +1,26 @@
+const PDF_LIBS = [
+  "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+];
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = src;
+    s.onload = resolve;
+    s.onerror = () => reject(new Error(`Failed to load ${src}`));
+    document.head.appendChild(s);
+  });
+}
+
+async function ensurePdfLibs() {
+  if (window.html2canvas && window.jspdf) return;
+  await Promise.all(PDF_LIBS.map(loadScript));
+}
+
 App.downloadPdf = async () => {
+  await ensurePdfLibs();
+
   const canvas     = document.getElementById("previewCanvas");
   const savedScale = App.state ? App.state.previewScale : 1;
   const savedFit   = App.state ? App.state.isFitMode   : true;
