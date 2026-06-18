@@ -1,45 +1,54 @@
 /* ============================================================
    home.css — VRXE Business Suite launcher
-
-   Self-contained (the home page does not load a feature theme).
-   Echoes the feature design system: Figtree UI font, soft surfaces,
-   per-feature accent colours (Quotation = blue, Receipt = green).
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Figtree:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-  --bg:        #F6F9FF;
-  --card:      #FFFFFF;
-  --text:      #14131A;
-  --muted:     #6A677A;
-  --line:      #E6E4F0;
-  --quote:     #2563EB;
-  --quote-soft:#EFF6FF;
-  --receipt:   #059669;
-  --receipt-soft:#ECFDF5;
-  --font-ui:   'Figtree', system-ui, -apple-system, sans-serif;
-  --ease:      cubic-bezier(0.16, 1, 0.3, 1);
+  --bg:          #FFFFFF;
+  --card:        #FFFFFF;
+  --text:        #111118;
+  --muted:       #72708A;
+  --line:        #E8E6F0;
+  --quote:       #1746C8;
+  --quote-soft:  #F0F4FF;
+  --receipt:     #0F7B5A;
+  --receipt-soft:#F0FAF6;
+  --font-ui:     'Figtree', system-ui, -apple-system, sans-serif;
+  --font-display:'DM Serif Display', Georgia, serif;
+  --ease:        cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-* , *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
 
 body {
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 40px;
-  padding: 48px 20px calc(48px + env(safe-area-inset-bottom, 0px));
-  background:
-    radial-gradient(1200px 600px at 50% -10%, #EAF1FF 0%, transparent 60%),
-    var(--bg);
+  padding: 40px 20px calc(40px + env(safe-area-inset-bottom, 0px));
+  background-color: #FFFFFF;
+  background-image: radial-gradient(circle, #CCCAE0 1px, transparent 1px);
+  background-size: 26px 26px;
   color: var(--text);
   font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 840px;
+  padding: 52px 48px;
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: 0 4px 6px rgba(17, 17, 24, .04), 0 12px 40px rgba(17, 17, 24, .08);
 }
 
 .home-brand {
@@ -47,28 +56,35 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 14px;
+  gap: 12px;
 }
+
 .home-logo {
   width: 64px; height: 64px;
   border-radius: 18px;
   object-fit: cover;
-  box-shadow: 0 12px 30px rgba(18, 15, 38, .14);
+  box-shadow: 0 8px 24px rgba(17, 17, 24, .14), 0 2px 6px rgba(17, 17, 24, .08);
 }
+
 .home-eyebrow {
   margin: 0;
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .22em;
+  font-weight: 600;
+  letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--muted);
 }
+
 .home-title {
   margin: 0;
-  font-size: clamp(26px, 6vw, 40px);
-  font-weight: 900;
-  letter-spacing: -.03em;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 6vw, 44px);
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: 1.1;
+  color: var(--text);
 }
+
 .home-sub {
   margin: 0;
   max-width: 30ch;
@@ -86,6 +102,7 @@ body {
 }
 
 .home-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -95,30 +112,50 @@ body {
   border-radius: 20px;
   text-decoration: none;
   color: inherit;
-  box-shadow: 0 2px 8px rgba(18, 15, 38, .05);
-  transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(17, 17, 24, .04), 0 4px 16px rgba(17, 17, 24, .07);
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .15s var(--ease);
 }
+
+.home-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  border-radius: 20px 20px 0 0;
+  opacity: 0;
+  transition: opacity .2s var(--ease);
+}
+
+.home-card[data-feature="quotation"]::before { background: var(--quote); }
+.home-card[data-feature="receipt"]::before   { background: var(--receipt); }
+
 .home-card:hover,
 .home-card:focus-visible {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 44px rgba(18, 15, 38, .14);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(17, 17, 24, .12), 0 3px 8px rgba(17, 17, 24, .06);
+  border-color: transparent;
   outline: none;
+}
+
+.home-card:hover::before,
+.home-card:focus-visible::before {
+  opacity: 1;
 }
 
 .home-card-icon {
   display: grid;
   place-items: center;
-  width: 52px; height: 52px;
-  border-radius: 14px;
+  width: 48px; height: 48px;
+  border-radius: 12px;
 }
-.home-card-icon svg { width: 26px; height: 26px; }
+.home-card-icon svg { width: 24px; height: 24px; }
 .home-card[data-feature="quotation"] .home-card-icon { background: var(--quote-soft);   color: var(--quote); }
 .home-card[data-feature="receipt"]   .home-card-icon { background: var(--receipt-soft); color: var(--receipt); }
-.home-card[data-feature="quotation"]:hover { border-color: var(--quote); }
-.home-card[data-feature="receipt"]:hover   { border-color: var(--receipt); }
 
-.home-card-title { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: -.02em; }
-.home-card-desc  { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+.home-card-title { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -.02em; }
+.home-card-desc  { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.55; flex: 1; }
+
 .home-card-cta {
   margin-top: 4px;
   display: inline-flex;
@@ -126,6 +163,11 @@ body {
   gap: 6px;
   font-size: 13px;
   font-weight: 700;
+  transition: gap .2s var(--ease);
+}
+.home-card:hover .home-card-cta,
+.home-card:focus-visible .home-card-cta {
+  gap: 10px;
 }
 .home-card[data-feature="quotation"] .home-card-cta { color: var(--quote); }
 .home-card[data-feature="receipt"]   .home-card-cta { color: var(--receipt); }
@@ -133,6 +175,7 @@ body {
 .home-foot {
   font-size: 12px;
   color: var(--muted);
+  letter-spacing: .02em;
 }
 
 @media (max-width: 560px) {
@@ -140,18 +183,29 @@ body {
     height: 100dvh;
     min-height: 0;
     overflow: hidden;
-    gap: 20px;
+    padding: 0;
+    background-size: 22px 22px;
+  }
+  .home-container {
+    height: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
     padding: 32px 16px 16px;
+    gap: 20px;
     justify-content: center;
+    overflow: hidden;
   }
   .home-brand        { gap: 8px; }
-  .home-logo         { width: 48px; height: 48px; border-radius: 14px; box-shadow: 0 6px 18px rgba(18, 15, 38, .12); }
+  .home-logo         { width: 48px; height: 48px; border-radius: 14px; }
   .home-eyebrow      { display: none; }
-  .home-title        { font-size: clamp(20px, 5.5vw, 26px); }
+  .home-title        { font-size: clamp(22px, 6vw, 28px); }
   .home-sub          { font-size: 13px; max-width: 30ch; }
   .home-cards        { grid-template-columns: 1fr; max-width: 380px; gap: 10px; }
-  .home-card         { padding: 16px; gap: 8px; border-radius: 16px; }
-  .home-card-icon    { width: 40px; height: 40px; border-radius: 12px; }
+  .home-card         { padding: 18px; gap: 10px; border-radius: 16px; }
+  .home-card::before { border-radius: 16px 16px 0 0; }
+  .home-card-icon    { width: 40px; height: 40px; border-radius: 10px; }
   .home-card-icon svg { width: 20px; height: 20px; }
   .home-card-title   { font-size: 16px; }
   .home-card-desc    { font-size: 12.5px; line-height: 1.45; }
