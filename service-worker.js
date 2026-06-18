@@ -11,49 +11,54 @@ const VERSION       = "vrxe-suite-v1";
 const SHELL_CACHE   = `${VERSION}-shell`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
+/* Resolve the site root relative to this SW file so the cache URLs
+   are correct whether the site is served from / or a GitHub Pages
+   subdirectory like /company-suite/. */
+const BASE = new URL(".", self.location.href).pathname; // e.g. "/" or "/company-suite/"
+
 const FEATURE_FILES = (feature, extraCss) => [
-  `/${feature}/`,
-  `/${feature}/index.html`,
-  `/${feature}/styles.css`,
-  `/${feature}/${extraCss}`,
-  `/${feature}/js/config.js`,
-  `/${feature}/js/codes.js`,
-  `/${feature}/js/tabs.js`,
-  `/${feature}/js/items.js`,
-  `/${feature}/js/previewRenderer.js`,
-  `/${feature}/js/pdf.js`,
-  `/${feature}/js/pdfFix.js`,
-  `/${feature}/js/defaultData.js`,
-  `/${feature}/js/adminModal.js`,
-  `/${feature}/js/init.js`,
-  `/${feature}/js/navMenu.js`,
-  `/${feature}/js/htmlIncludes.js`,
-  `/${feature}/partials/header.html`,
-  `/${feature}/partials/tabs.html`,
-  `/${feature}/partials/form-panels.html`,
-  `/${feature}/partials/preview.html`,
-  `/${feature}/partials/item-template.html`,
-  `/${feature}/partials/admin-modal.html`
+  `${BASE}${feature}/`,
+  `${BASE}${feature}/index.html`,
+  `${BASE}${feature}/styles.css`,
+  `${BASE}${feature}/${extraCss}`,
+  `${BASE}${feature}/js/config.js`,
+  `${BASE}${feature}/js/codes.js`,
+  `${BASE}${feature}/js/tabs.js`,
+  `${BASE}${feature}/js/items.js`,
+  `${BASE}${feature}/js/previewRenderer.js`,
+  `${BASE}${feature}/js/pdf.js`,
+  `${BASE}${feature}/js/pdfFix.js`,
+  `${BASE}${feature}/js/defaultData.js`,
+  `${BASE}${feature}/js/adminModal.js`,
+  `${BASE}${feature}/js/init.js`,
+  `${BASE}${feature}/js/navMenu.js`,
+  `${BASE}${feature}/js/htmlIncludes.js`,
+  `${BASE}${feature}/partials/header.html`,
+  `${BASE}${feature}/partials/tabs.html`,
+  `${BASE}${feature}/partials/form-panels.html`,
+  `${BASE}${feature}/partials/preview.html`,
+  `${BASE}${feature}/partials/item-template.html`,
+  `${BASE}${feature}/partials/admin-modal.html`
 ];
 
 const SHELL = [
-  "/",
-  "/index.html",
-  "/manifest.json",
+  BASE,
+  `${BASE}index.html`,
+  `${BASE}manifest.json`,
   /* Shared */
-  "/shared/css/home.css",
-  "/shared/css/nav.css",
-  "/shared/css/responsive.css",
-  "/shared/js/utils.js",
-  "/shared/js/previewControls.js",
-  "/shared/js/mobileTabUI.js",
-  "/shared/js/featureNav.js",
-  "/shared/partials/form-footer.html",
-  "/shared/assets/vrxe-logo.png",
-  "/shared/assets/icon-192.png",
-  "/shared/assets/icon-512.png",
-  "/shared/assets/icon-maskable-192.png",
-  "/shared/assets/icon-maskable-512.png",
+  `${BASE}shared/css/home.css`,
+  `${BASE}shared/css/nav.css`,
+  `${BASE}shared/css/responsive.css`,
+  `${BASE}shared/js/utils.js`,
+  `${BASE}shared/js/previewControls.js`,
+  `${BASE}shared/js/mobileTabUI.js`,
+  `${BASE}shared/js/featureNav.js`,
+  `${BASE}shared/partials/form-footer.html`,
+  `${BASE}shared/assets/vrxe-logo.png`,
+  `${BASE}shared/assets/icon-192.png`,
+  `${BASE}shared/assets/icon-512.png`,
+  `${BASE}shared/assets/icon-maskable-192.png`,
+  `${BASE}shared/assets/icon-maskable-512.png`,
   /* Features */
   ...FEATURE_FILES("quotation", "quotation.css"),
   ...FEATURE_FILES("receipt", "receipt.css")
@@ -104,7 +109,7 @@ self.addEventListener("fetch", (event) => {
           return res;
         })
         .catch(() =>
-          caches.match(request).then((r) => r || caches.match("/index.html"))
+          caches.match(request).then((r) => r || caches.match(`${BASE}index.html`))
         )
     );
     return;

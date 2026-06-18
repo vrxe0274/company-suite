@@ -43,10 +43,14 @@
       '<line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/></svg>'
   };
 
+  /* Derive the site root from the current URL so absolute paths work
+     both locally (served from /) and on GitHub Pages (served from /repo/). */
+  var base = location.pathname.replace(/\/(quotation|receipt)(\/.*)?$/, "/");
+
   var ITEMS = [
-    { key: "home",      href: "/",           label: "Home" },
-    { key: "quotation", href: "/quotation/", label: "Quotation" },
-    { key: "receipt",   href: "/receipt/",   label: "Receipt" }
+    { key: "home",      href: base,                   label: "Home" },
+    { key: "quotation", href: base + "quotation/",    label: "Quotation" },
+    { key: "receipt",   href: base + "receipt/",      label: "Receipt" }
   ];
 
   function itemHTML(it) {
@@ -64,7 +68,7 @@
   rail.className = "feature-rail";
   rail.setAttribute("aria-label", "Switch product");
   rail.innerHTML =
-    '<a class="fnav-brand" href="/" aria-label="VRXE Suite home">' +
+    '<a class="fnav-brand" href="' + base + '" aria-label="VRXE Suite home">' +
       '<img src="/shared/assets/vrxe-logo.png" alt="" /></a>' +
     '<div class="fnav-rail-items">' + links + "</div>";
 
