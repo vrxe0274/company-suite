@@ -77,17 +77,23 @@ App.setActiveTab = (tabName) => {
   });
 
   const currentIndex = App.tabOrder.indexOf(tabName);
+  const isLast       = currentIndex === App.tabOrder.length - 1;
   App.$("prevTabBtn").disabled = currentIndex === 0;
 
   const nextLabel = App.$("nextTabBtn").querySelector("span");
-  if (nextLabel) nextLabel.textContent = currentIndex === App.tabOrder.length - 1 ? "Back to Start" : "Next";
+  if (nextLabel) nextLabel.textContent = isLast ? "Preview" : "Next";
 
   App.updateTabProgress();
 };
 
 App.goToNextTab = () => {
   const currentIndex = App.tabOrder.indexOf(App.state.activeTab);
-  App.setActiveTab(App.tabOrder[(currentIndex + 1) % App.tabOrder.length]);
+  if (currentIndex === App.tabOrder.length - 1) {
+    const previewBtn = document.getElementById("mptbPreviewBtn");
+    if (previewBtn) previewBtn.click();
+    return;
+  }
+  App.setActiveTab(App.tabOrder[currentIndex + 1]);
 };
 
 App.goToPrevTab = () => {
