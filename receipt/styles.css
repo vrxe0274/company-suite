@@ -1,0 +1,1122 @@
+/* ============================================================
+   VRXE Receipt Maker — UI Theme
+   Design: migrated from VRXE Quotation Maker
+   Fonts: Figtree (UI) + JetBrains Mono (codes / numbers)
+
+   File organisation
+   ─────────────────
+   1.  Design Tokens  (:root)
+   2.  Reset
+   3.  Header
+   4.  Main Layout
+   5.  Sidebar & Tab Buttons
+   6.  Admin Tab Button
+   7.  Form Content & Panels
+   8.  Tab Footer
+   9.  Section Titles & Helpers
+   10. Form Fields
+   11. Buttons
+   12. Items List & Item Cards
+   13. Verification Card
+   14. Preview Panel
+   15. Admin Modal
+   16. PDF Export Rendering Fix
+   17. Item Type Badges
+   18. Add-row Buttons
+   19. Services Tab Desktop Scroll
+   20. Reduced-Motion Override
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* ── 1. Design Tokens ──────────────────────────────────────── */
+:root {
+  /* ── Surfaces ── */
+  --bg:          #F4F5F5;
+  --card:        #F4F5F5;
+  --sidebar-bg:  #FFFFFF;
+  --input-bg:    #FAFAF9;
+  --soft:        #EFEFEE;
+  --item-bg:     #FDFDFB;
+  --header-bg:   #FFFFFF;
+
+  /* ── Text ── */
+  --text:        #14131A;
+  --text-2:      #3D3B4A;
+  --muted:       #8A8799;
+  --label:       #6A677A;
+
+  /* ── Borders ── */
+  --line:               #E6E4F0;
+  --line-strong:        #CAC8DA;
+  --input-border:       #D8D6E8;
+  --input-border-focus: #059669;
+
+  /* ── Brand / Accent ──
+     --brand-mid and --brand-end are reserved for future gradient
+     use. Kept so downstream consumers don't need to redeclare them. */
+  --brand:      #059669;
+  --brand-mid:  #C026D3;  /* gradient midpoint — reserved */
+  --brand-end:  #EC4899;  /* gradient end     — reserved */
+  --brand-soft: #ECFDF5;
+  --brand-ring: rgba(5, 150, 105, .15);
+
+  /* ── Button fill ── */
+  --btn-fill: #000000;
+
+  /* ── Active tab uses the same fill as buttons ── */
+  --tab-active: var(--btn-fill);
+
+  /* ── Semantic colours ── */
+  --green:       #16A34A;
+  --green-bg:    #F0FDF4;
+  --green-light: #DCFCE7;
+  --amber:       #B45309;
+  --amber-bg:    #FFFBEB;
+  --red:         #DC2626;
+  --red-bg:      #FEF2F2;
+
+  /* ── Item card surface colours (receipt-domain specific)
+     Product = green (paid service), Discount = red (deduction),
+     Inclusion = amber/orange (matches quotation's additional style) ── */
+  --item-product-bg:              #F6FDF9;
+  --item-product-border:          #BBF7D0;
+  --item-product-border-hover:    #86EFAC;
+  --item-discount-bg:             #FFF8F8;
+  --item-discount-border:         #FECACA;
+  --item-discount-border-hover:   #FCA5A5;
+  --item-inclusion-bg:            #EFF6FF;
+  --item-inclusion-border:        #BFDBFE;
+  --item-inclusion-border-hover:  #93C5FD;
+
+  /* ── Shadows ── */
+  --shadow-xs: 0 1px 2px rgba(18, 15, 38, .05);
+  --shadow-sm: 0 2px 8px rgba(18, 15, 38, .08), 0 1px 2px rgba(18, 15, 38, .04);
+  --shadow-md: 0 4px 18px rgba(18, 15, 38, .09), 0 1px 4px rgba(18, 15, 38, .05);
+  --shadow-lg: 0 16px 40px rgba(18, 15, 38, .13), 0 4px 10px rgba(18, 15, 38, .06);
+  --shadow-xl: 0 28px 64px rgba(18, 15, 38, .18), 0 6px 16px rgba(18, 15, 38, .09);
+
+  /* ── Border radii ── */
+  --r-xs:   5px;
+  --r-sm:   8px;
+  --r-md:   10px;
+  --r-lg:   14px;
+  --r-xl:   18px;
+  --r-pill: 999px;
+
+  /* ── Typography ── */
+  --font-ui:   'Figtree', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  /* ── Motion ── */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── 2. Reset ──────────────────────────────────────────────── */
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  overflow: hidden;
+}
+
+h1, h2, h3, p { margin-top: 0; }
+h1, h2        { margin-bottom: 0; }
+h3            { margin: 20px 0 10px; }
+
+::selection { background: var(--brand-soft); color: var(--text); }
+
+/* ── 3. Header ──────────────────────────────────────────────── */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 24px;
+  height: 62px;
+  background: var(--header-bg);
+  border-bottom: 1px solid rgba(5, 150, 105, .14);
+}
+
+.brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo-frame {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: transparent;
+  flex: 0 0 38px;
+}
+
+.brand-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #14131ab6;
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  color: var(--text);
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* ── 4. Main Layout ─────────────────────────────────────────── */
+.app-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: calc(100vh - 62px);
+  overflow: hidden;
+}
+
+/* ── 5. Sidebar & Tab Buttons ──────────────────────────────── */
+.tabs {
+  flex: 0 0 186px;
+  width: 186px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--line);
+  padding: 20px 12px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tabs .sidebar-brand { display: none; }
+
+.tab-group-label {
+  margin: 14px 8px 6px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.tab-divider {
+  height: 1px;
+  margin: 8px 4px;
+  background: var(--line);
+}
+
+.tab-btn {
+  width: 100%;
+  border: none;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  transition: background .15s var(--ease), color .15s, transform .1s;
+  letter-spacing: -.01em;
+}
+
+.tab-text { letter-spacing: -.01em; line-height: 1.25; }
+
+.tab-number {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 26px;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--soft);
+  color: var(--text-2);
+  border: 1.5px solid var(--line);
+  transition: background .15s, border-color .15s, color .15s;
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+}
+
+.tab-btn:hover:not(.is-active) {
+  background: var(--soft);
+  color: var(--text);
+}
+
+.tab-btn.is-active {
+  background: var(--tab-active);
+  color: #fff;
+  box-shadow: 0 4px 16px var(--brand-ring);
+}
+
+.tab-btn.is-active .tab-number {
+  background: rgba(255, 255, 255, .2);
+  border-color: rgba(255, 255, 255, .35);
+  color: #fff;
+}
+
+.tab-number.is-complete {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+
+.tab-btn.is-active .tab-number.is-complete {
+  background: rgba(255, 255, 255, .25);
+  border-color: rgba(255, 255, 255, .5);
+  color: #fff;
+}
+
+/* ── 6. Admin Tab Button ────────────────────────────────────── */
+#openAdminSettingsBtn.admin-tab {
+  margin-top: 2px;
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  color: var(--text-2);
+  border-radius: var(--r-md);
+  padding: 10px 12px;
+}
+
+#openAdminSettingsBtn.admin-tab:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--text);
+}
+
+#openAdminSettingsBtn.admin-tab .tab-number {
+  width: 26px;
+  height: 26px;
+  flex-basis: 26px;
+  font-size: 13px;
+  background: var(--green-bg);
+  border-color: var(--green);
+  color: var(--green);
+  font-weight: 800;
+}
+
+#openAdminSettingsBtn.admin-tab .tab-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.2;
+  white-space: normal;
+  min-width: 0;
+}
+
+#openAdminSettingsBtn.admin-tab .tab-text strong {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+#openAdminSettingsBtn.admin-tab .tab-text small {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.tab-btn.admin-tab.is-complete {
+  border-color: var(--green);
+  background: var(--green-bg);
+}
+
+.nav-dropdown { display: none; }
+
+/* ── 7. Form Content & Panels ──────────────────────────────── */
+.form-content {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.tab-panels {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px 28px 14px;
+  background: var(--card);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+.tab-panels::-webkit-scrollbar       { width: 5px; }
+.tab-panels::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 99px; }
+
+.tab-panel { display: none; animation: fadeUp .18s var(--ease) both; }
+.tab-panel.is-active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 8. Tab Footer ──────────────────────────────────────────── */
+.tab-footer {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 28px 14px;
+  border-top: 1px solid var(--line);
+  background: var(--card);
+}
+
+/* ── 9. Section Titles & Helpers ────────────────────────────── */
+.section-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.section-heading { min-width: 0; }
+
+.section-kicker {
+  display: inline-block;
+  color: var(--muted);
+  margin-bottom: 5px;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -.04em;
+  color: var(--text);
+  line-height: 1.15;
+}
+
+.section-helper {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  margin: 4px 0 0;
+  line-height: 1.6;
+}
+
+/* ── 10. Form Fields ────────────────────────────────────────── */
+.grid { display: grid; gap: 14px; }
+.two  { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+label {
+  display: grid;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 11.5px;
+  color: var(--label);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1.5px solid var(--input-border);
+  border-radius: var(--r-sm);
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--input-bg);
+  outline: none;
+  transition: border-color .14s, box-shadow .14s, background .14s;
+  letter-spacing: -.01em;
+  line-height: 1.5;
+}
+
+input:hover,
+textarea:hover {
+  border-color: var(--line-strong);
+  background: #fff;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--input-border-focus);
+  background: #fff;
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #B5B2C6;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+textarea             { resize: vertical; }
+input[type="date"]   { font-family: var(--font-ui); }
+input[type="number"] { font-family: var(--font-mono); font-size: 14px; }
+
+/* ── 11. Buttons ────────────────────────────────────────────── */
+.primary-btn,
+.ghost-btn {
+  border-radius: var(--r-sm);
+  padding: 10px 20px;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform .12s var(--ease), box-shadow .14s, opacity .14s;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+
+.btn-icon { flex-shrink: 0; }
+
+.primary-btn {
+  background: var(--btn-fill);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 14px var(--brand-ring);
+}
+.primary-btn:hover {
+  opacity: .92;
+  box-shadow: 0 6px 20px var(--brand-ring);
+  transform: translateY(-1px);
+}
+.primary-btn:active { transform: translateY(0); box-shadow: 0 2px 8px var(--brand-ring); }
+
+.ghost-btn {
+  background: #fff;
+  color: var(--text);
+  border: 1.5px solid var(--line-strong);
+}
+.ghost-btn:hover {
+  border-color: var(--line-strong);
+  background: var(--soft);
+  transform: translateY(-1px);
+}
+.ghost-btn:active { transform: translateY(0); }
+
+button:focus-visible,
+.tab-btn:focus-visible,
+.zoom-btn:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* ── 12. Items List & Item Cards ────────────────────────────── */
+.items-list { display: grid; gap: 10px; }
+
+.item-card {
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--item-bg);
+  transition: border-color .14s, box-shadow .14s;
+  overflow: hidden;
+}
+.item-card:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Card header holds badge + controls in a flex row.
+   Clicking the header or badge toggles collapse.             */
+.item-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px 0;
+  cursor: pointer;
+  user-select: none;
+  gap: 8px;
+}
+
+.item-card-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* Collapse toggle — circular icon button. */
+.item-toggle-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-pill);
+  border: 1.5px solid var(--line);
+  background: var(--soft);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: background .14s, border-color .14s, color .14s;
+  flex-shrink: 0;
+  padding: 0;
+}
+.item-toggle-btn:hover {
+  background: var(--brand-soft);
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+/* Chevron rotates 180° when collapsed so it always shows the action. */
+.item-chevron { transition: transform .2s var(--ease); }
+.item-card.is-collapsed .item-chevron { transform: rotate(180deg); }
+
+/* Collapsible body — hidden via display:none. */
+.item-card-body {
+  padding: 10px 18px 14px;
+  overflow: hidden;
+}
+.item-card.is-collapsed .item-card-body { display: none; }
+
+/* One-line summary shown while collapsed. */
+.item-collapsed-preview {
+  display: none;
+  padding: 6px 14px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.item-collapsed-preview:hover { color: var(--brand); }
+.item-card.is-collapsed .item-collapsed-preview { display: block; }
+
+.item-grid {
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+}
+.item-grid label:nth-child(3) { grid-column: auto; }
+
+.remove-item-btn {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: var(--r-pill);
+  border: 1.5px solid #FBCFE8;
+  background: var(--red-bg);
+  color: var(--red);
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  transition: background .14s, border-color .14s, transform .12s;
+  flex-shrink: 0;
+}
+.remove-item-btn:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* ── 13. Verification Card ──────────────────────────────────── */
+.verification-card {
+  border: 1.5px solid var(--line);
+  border-left: 3px solid var(--brand);
+  border-radius: var(--r-md);
+  background: var(--brand-soft);
+  padding: 13px 16px;
+  margin-bottom: 12px;
+}
+
+.verify-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--text-2);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.verify-label input {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  flex: 0 0 16px;
+  accent-color: var(--brand);
+  cursor: pointer;
+}
+
+/* ── 14. Preview Panel ──────────────────────────────────────── */
+.preview-panel {
+  flex: 1.3 1 0;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 18px 0;
+  background: var(--bg);
+  border-left: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.preview-title {
+  flex: 0 0 auto;
+  align-items: center;
+  margin-bottom: 0;
+  padding-bottom: 14px;
+}
+
+.preview-title .section-kicker {
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.preview-title .section-kicker::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22C55E;
+  flex: 0 0 8px;
+}
+
+.preview-title h2 { display: none; }
+
+/* ── Zoom controls ── */
+.preview-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.zoom-btn {
+  border: 1.5px solid var(--line-strong);
+  background: #fff;
+  color: var(--text);
+  min-width: 30px;
+  height: 30px;
+  border-radius: var(--r-sm);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  transition: background .12s, border-color .12s, color .12s;
+}
+.zoom-btn:hover { background: var(--soft); border-color: var(--line-strong); }
+
+.fit-btn {
+  padding: 0 14px;
+  min-width: auto;
+  font-size: 12px;
+  letter-spacing: .02em;
+  font-weight: 700;
+  background: var(--btn-fill);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 2px 8px var(--brand-ring);
+}
+.fit-btn:hover { opacity: .9; background: var(--btn-fill); color: #fff; }
+
+.zoom-level {
+  min-width: 40px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+}
+
+/* ── Preview scroll container ── */
+.preview-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 20px;
+  background: #E6E5EE;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  border: 1px solid var(--line);
+  border-bottom: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+.preview-scroll::-webkit-scrollbar        { width: 6px; height: 6px; }
+.preview-scroll::-webkit-scrollbar-thumb  { background: var(--line-strong); border-radius: 99px; }
+
+/* IMPORTANT — Controls the preview scaling mechanism.
+   --preview-scale is set via JS (previewControls.js / pdfFix.js).
+   Single-page receipt: base height 1123px.
+   Do NOT modify dimensions without updating pdfFix.js.         */
+.preview-canvas {
+  width: calc(794px * var(--preview-scale, 1));
+  min-height: calc(1123px * var(--preview-scale, 1));
+  margin: 0 auto;
+  position: relative;
+}
+
+#receiptPreview {
+  transform: scale(var(--preview-scale, 1));
+  transform-origin: top left;
+  width: 794px;
+}
+
+/* ── 15. Admin Modal ────────────────────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(10, 9, 20, .58);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.modal-backdrop.is-open { display: flex; }
+
+.admin-modal {
+  width: min(720px, 100%);
+  max-height: min(90vh, 860px);
+  overflow: auto;
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-xl);
+  padding: 34px;
+  animation: modalIn .22s var(--ease) both;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(14px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.admin-modal-view[hidden] { display: none !important; }
+
+.modal-lock-badge {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  margin-bottom: 14px;
+  color: #fff;
+  background: var(--btn-fill);
+  box-shadow: var(--shadow-sm);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-pill);
+  background: #fff;
+  color: var(--text);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  transition: background .12s, border-color .12s, transform .15s;
+}
+.modal-close-btn:hover {
+  background: var(--soft);
+  border-color: var(--line-strong);
+  transform: rotate(90deg);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.modal-error {
+  color: var(--red);
+  font-size: 12.5px;
+  font-weight: 600;
+  min-height: 18px;
+  margin: 5px 0 0;
+}
+
+/* ── Admin Modal Internal Tabs ── */
+.modal-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  margin: 18px 0;
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--soft);
+}
+
+.modal-tab-btn {
+  border: 0;
+  border-radius: var(--r-pill);
+  padding: 8px 22px;
+  background: transparent;
+  color: var(--text-2);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .14s, color .14s, box-shadow .14s;
+}
+.modal-tab-btn.is-active {
+  background: var(--btn-fill);
+  color: #fff;
+  box-shadow: 0 2px 8px var(--brand-ring);
+}
+
+.admin-tab-panel         { display: none; }
+.admin-tab-panel.is-active { display: block; }
+
+/* ── 16. PDF Export Rendering Fix ──────────────────────────── */
+/* html2canvas captures CSS transforms. During export pdfFix.js
+   sets --preview-scale to 1 and toggles this body class to
+   expand overflow containers that would otherwise clip pages.  */
+body.app-pdf-rendering #previewScroll,
+body.app-pdf-rendering .preview-scroll {
+  overflow:   visible !important;
+  height:     auto    !important;
+  max-height: none    !important;
+}
+
+body.app-pdf-rendering .preview-panel {
+  overflow: visible !important;
+  height:   auto    !important;
+}
+
+body.app-pdf-rendering #previewCanvas {
+  width:      794px  !important;
+  min-height: 1123px !important;
+}
+
+body.app-pdf-rendering #receiptPreview {
+  transform:        none    !important;
+  transform-origin: top left;
+}
+
+/* ── 17. Item Type Badges ───────────────────────────────────── */
+.item-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 11px 3px 9px;
+  border-radius: var(--r-pill);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  width: fit-content;
+  font-family: var(--font-ui);
+  flex-shrink: 0;
+}
+
+/* Product — green, matches PDF green left-border */
+.item-card[data-type="product"] {
+  background: var(--item-product-bg);
+  border-color: var(--item-product-border);
+  border-left: 3px solid var(--green);
+}
+.item-card[data-type="product"]:hover { border-color: var(--item-product-border-hover); }
+.item-card[data-type="product"] .item-type-badge {
+  background: var(--green-light);
+  color: #15803D;
+  border: 1px solid var(--item-product-border);
+}
+
+/* Discount — red, matches PDF red deduction row */
+.item-card[data-type="discount"] {
+  background: var(--item-discount-bg);
+  border-color: var(--item-discount-border);
+  border-left: 3px solid var(--red);
+}
+.item-card[data-type="discount"]:hover { border-color: var(--item-discount-border-hover); }
+.item-card[data-type="discount"] .item-type-badge {
+  background: #FEE2E2;
+  color: #991B1B;
+  border: 1px solid var(--item-discount-border);
+}
+
+/* Inclusion — blue accent. */
+.item-card[data-type="inclusion"] {
+  background: var(--item-inclusion-bg);
+  border-color: var(--item-inclusion-border);
+  border-left: 3px solid #2563EB;
+}
+.item-card[data-type="inclusion"]:hover { border-color: var(--item-inclusion-border-hover); }
+.item-card[data-type="inclusion"] .item-type-badge {
+  background: #DBEAFE;
+  color: #1D4ED8;
+  border: 1px solid var(--item-inclusion-border);
+}
+
+.item-card[data-type="product"]   .item-grid,
+.item-card[data-type="discount"]  .item-grid,
+.item-card[data-type="inclusion"] .item-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ── 18. Add-row Buttons ────────────────────────────────────── */
+.add-row-btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.add-product-btn {
+  border-color: var(--item-product-border);
+  color: #15803D;
+  background: var(--item-product-bg);
+}
+.add-product-btn:hover {
+  border-color: var(--item-product-border-hover);
+  background: var(--green-light);
+  color: #15803D;
+  transform: translateY(-1px);
+}
+
+.add-discount-btn {
+  border-color: var(--item-discount-border);
+  color: #991B1B;
+  background: var(--item-discount-bg);
+}
+.add-discount-btn:hover {
+  border-color: var(--item-discount-border-hover);
+  background: #FEE2E2;
+  color: #991B1B;
+  transform: translateY(-1px);
+}
+
+.add-inclusion-btn {
+  border-color: var(--item-inclusion-border);
+  color: #1D4ED8;
+  background: var(--item-inclusion-bg);
+}
+.add-inclusion-btn:hover {
+  border-color: var(--item-inclusion-border-hover);
+  background: #DBEAFE;
+  color: #1D4ED8;
+  transform: translateY(-1px);
+}
+
+/* ── 19. Services Tab — Desktop Scroll ──────────────────────── */
+@media (min-width: 768px) {
+  #tab-services.is-active {
+    display: flex;
+    flex-direction: column;
+    max-height: none;
+    min-height: 0;
+  }
+
+  #tab-services.is-active .items-heading,
+  #tab-services.is-active .verification-card {
+    flex: 0 0 auto;
+  }
+
+  #tab-services.is-active #itemsList {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+    max-height: calc(100vh - 340px);
+    padding-right: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+
+  #tab-services.is-active #itemsList::-webkit-scrollbar       { width: 4px; }
+  #tab-services.is-active #itemsList::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 99px; }
+}
+
+/* ── 20. Reduced Motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:  .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+/* ── Load Error Banner ──────────────────────────────────────── */
+.load-error {
+  margin: 16px 24px;
+  padding: 14px 18px;
+  border: 1.5px solid var(--text);
+  border-left: 4px solid var(--red);
+  border-radius: var(--r-md);
+  background: #fff;
+  font-weight: 700;
+  font-size: 13.5px;
+}

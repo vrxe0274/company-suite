@@ -1,0 +1,14 @@
+<!-- Item cards are built dynamically in js/items.js.
+     This template is kept for legacy compatibility. -->
+<template id="itemTemplate">
+  <div class="item-card" data-type="product">
+    <div class="item-type-badge">Product / Service</div>
+    <button class="remove-item-btn" type="button" aria-label="Remove item row" title="Remove">🗑</button>
+    <div class="grid item-grid">
+      <label>Item / Service Name<input class="item-name" type="text" /></label>
+      <label>Description<input class="item-description" type="text" /></label>
+      <label>Quantity<input class="item-qty" type="number" min="0" step="1" value="1" /></label>
+      <label>Unit Price (₱)<input class="item-unitprice" type="number" min="0" step="0.01" /></label>
+    </div>
+  </div>
+</template>

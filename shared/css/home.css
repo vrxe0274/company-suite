@@ -1,0 +1,141 @@
+/* ============================================================
+   home.css — VRXE Business Suite launcher
+
+   Self-contained (the home page does not load a feature theme).
+   Echoes the feature design system: Figtree UI font, soft surfaces,
+   per-feature accent colours (Quotation = blue, Receipt = green).
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --bg:        #F6F9FF;
+  --card:      #FFFFFF;
+  --text:      #14131A;
+  --muted:     #6A677A;
+  --line:      #E6E4F0;
+  --quote:     #2563EB;
+  --quote-soft:#EFF6FF;
+  --receipt:   #059669;
+  --receipt-soft:#ECFDF5;
+  --font-ui:   'Figtree', system-ui, -apple-system, sans-serif;
+  --ease:      cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* , *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 48px 20px calc(48px + env(safe-area-inset-bottom, 0px));
+  background:
+    radial-gradient(1200px 600px at 50% -10%, #EAF1FF 0%, transparent 60%),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+.home-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+.home-logo {
+  width: 64px; height: 64px;
+  border-radius: 18px;
+  object-fit: cover;
+  box-shadow: 0 12px 30px rgba(18, 15, 38, .14);
+}
+.home-eyebrow {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.home-title {
+  margin: 0;
+  font-size: clamp(26px, 6vw, 40px);
+  font-weight: 900;
+  letter-spacing: -.03em;
+}
+.home-sub {
+  margin: 0;
+  max-width: 30ch;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.home-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 720px;
+}
+
+.home-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px 26px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 2px 8px rgba(18, 15, 38, .05);
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+}
+.home-card:hover,
+.home-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 44px rgba(18, 15, 38, .14);
+  outline: none;
+}
+
+.home-card-icon {
+  display: grid;
+  place-items: center;
+  width: 52px; height: 52px;
+  border-radius: 14px;
+}
+.home-card-icon svg { width: 26px; height: 26px; }
+.home-card[data-feature="quotation"] .home-card-icon { background: var(--quote-soft);   color: var(--quote); }
+.home-card[data-feature="receipt"]   .home-card-icon { background: var(--receipt-soft); color: var(--receipt); }
+.home-card[data-feature="quotation"]:hover { border-color: var(--quote); }
+.home-card[data-feature="receipt"]:hover   { border-color: var(--receipt); }
+
+.home-card-title { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: -.02em; }
+.home-card-desc  { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+.home-card-cta {
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.home-card[data-feature="quotation"] .home-card-cta { color: var(--quote); }
+.home-card[data-feature="receipt"]   .home-card-cta { color: var(--receipt); }
+
+.home-foot {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+@media (max-width: 560px) {
+  body { gap: 32px; justify-content: flex-start; padding-top: 56px; }
+  .home-cards { grid-template-columns: 1fr; max-width: 420px; }
+}

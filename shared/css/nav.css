@@ -1,0 +1,153 @@
+/* ============================================================
+   nav.css — Persistent product switcher (rail + bottom nav)
+
+   Pairs with shared/js/featureNav.js. Token-consumer only: every
+   var() has a fallback so this file is safe on any feature page
+   without overriding that feature's brand tokens. The active item
+   adopts the current feature's --brand accent for cohesion.
+
+   Desktop (≥768px): vertical activity rail, far left.
+   Mobile  (≤767px): fixed bottom navigation bar; the feature
+   layout heights are reduced by --feat-nav-h so nothing is hidden
+   behind the bar.
+   ============================================================ */
+
+:root {
+  --feat-rail-w: 64px;
+}
+
+/* Both surfaces hidden until a breakpoint shows the right one. */
+.feature-rail,
+.feature-bottomnav { display: none; }
+
+.fnav-item {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-2, #3D3B4A);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  -webkit-tap-highlight-color: transparent;
+  transition: background .15s ease, color .15s ease;
+}
+.fnav-icon { display: inline-flex; }
+.fnav-icon svg { display: block; }
+
+/* ── Desktop: activity rail ──────────────────────────────────── */
+@media (min-width: 768px) {
+  body.has-feature-nav { padding-left: var(--feat-rail-w); }
+
+  .feature-rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: var(--feat-rail-w);
+    padding: 12px 0;
+    background: var(--sidebar-bg, #fff);
+    border-right: 1px solid var(--line, #E6E4F0);
+    z-index: 200;
+  }
+
+  .fnav-brand {
+    display: grid;
+    place-items: center;
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .fnav-brand img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .fnav-rail-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .feature-rail .fnav-item {
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 50px;
+    padding: 9px 4px;
+    border-radius: var(--r-md, 10px);
+    color: var(--muted, #8A8799);
+  }
+  .feature-rail .fnav-icon svg { width: 22px; height: 22px; }
+  .feature-rail .fnav-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .01em;
+  }
+  .feature-rail .fnav-item:hover {
+    background: var(--soft, #EEF2FF);
+    color: var(--text, #14131A);
+  }
+  .feature-rail .fnav-item.is-active {
+    background: var(--brand-soft, #EFF6FF);
+    color: var(--brand, #2563EB);
+  }
+
+  .feature-bottomnav { display: none !important; }
+}
+
+/* ── Mobile: bottom navigation bar ───────────────────────────── */
+@media (max-width: 767px) {
+  :root { --feat-nav-h: calc(54px + env(safe-area-inset-bottom, 0px)); }
+
+  .feature-rail { display: none !important; }
+
+  .feature-bottomnav {
+    display: flex;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    height: var(--feat-nav-h);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: rgba(255, 255, 255, .97);
+    border-top: 1px solid var(--line, #E6E4F0);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 -2px 12px rgba(20, 18, 35, .06);
+    z-index: 96;
+  }
+
+  .feature-bottomnav .fnav-item {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    padding: 7px 4px;
+    color: var(--muted, #8A8799);
+    font-weight: 700;
+  }
+  .feature-bottomnav .fnav-icon svg { width: 21px; height: 21px; }
+  .feature-bottomnav .fnav-label { font-size: 10.5px; letter-spacing: .01em; }
+  .feature-bottomnav .fnav-item.is-active { color: var(--brand, #2563EB); }
+
+  /* Reserve space so the bottom bar never covers feature content. */
+  body.has-feature-nav .app-layout,
+  body.has-feature-nav .preview-panel {
+    height: calc(100vh  - 56px - 61px - var(--feat-nav-h));
+    height: calc(100dvh - 56px - 61px - var(--feat-nav-h));
+  }
+}
+
+@media (max-width: 480px) {
+  body.has-feature-nav .app-layout,
+  body.has-feature-nav .preview-panel {
+    height: calc(100vh  - 52px - 60px - var(--feat-nav-h));
+    height: calc(100dvh - 52px - 60px - var(--feat-nav-h));
+  }
+}
+
+@media (max-width: 767px) and (orientation: landscape) {
+  body.has-feature-nav .app-layout,
+  body.has-feature-nav .preview-panel {
+    height: calc(100vh  - 46px - 52px - var(--feat-nav-h));
+    height: calc(100dvh - 46px - 52px - var(--feat-nav-h));
+  }
+}
