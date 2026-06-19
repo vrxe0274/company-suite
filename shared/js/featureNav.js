@@ -69,7 +69,7 @@
   rail.setAttribute("aria-label", "Switch product");
   rail.innerHTML =
     '<a class="fnav-brand" href="' + base + '" aria-label="VRXE Suite home">' +
-      '<img src="/shared/assets/vrxe-logo.png" alt="" /></a>' +
+      '<img src="' + base + 'shared/assets/vrxe-logo.png" alt="" /></a>' +
     '<div class="fnav-rail-items">' + links + "</div>";
 
   /* Mobile bottom navigation */
