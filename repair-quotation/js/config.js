@@ -10,7 +10,7 @@ App.fields = [
   "quoteCode", "quoteDate", "repName", "serviceAvailed",
   "clientName", "clientCompany", "clientAddress", "clientPhone",
   "unitName", "unitQty",
-  "paymentBank", "paymentAccount", "discountPercent",
+  "paymentBank", "paymentAccount", "paymentTerms",
   "warrantyNote", "orderTerms", "warrantyApproval", "notesText"
 ];
 

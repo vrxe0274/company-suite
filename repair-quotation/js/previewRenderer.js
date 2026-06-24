@@ -12,10 +12,6 @@ App.renderPreview = () => {
   const parts  = App.getPartItems().filter((i) => i.name);
   const total  = [...labor, ...parts].reduce((s, i) => s + i.price, 0);
 
-  const discPct     = Math.min(Math.max(Number(data.discountPercent) || 20, 0), 100);
-  const option1Price = Math.round(total * (1 - discPct / 100));
-  const option2Price = total;
-
   const unitName = App.esc(data.unitName || "VR Unit");
   const unitQty  = App.esc(data.unitQty  || "1");
 
@@ -35,30 +31,27 @@ App.renderPreview = () => {
   } else {
     /* Combine: labor first, then parts — all share the unit cell via rowspan */
     const allRows = [...labor, ...parts];
+    const hasBoth  = labor.length > 0 && parts.length > 0;
     const spanRows = allRows.length;
 
+    const firstRow = allRows[0];
     tableBody += `<tr class="rq-first-row">
       <td class="rq-unit-cell" rowspan="${spanRows}">VR Unit:<br><strong>${unitName}</strong></td>
       <td class="rq-qty-cell" rowspan="${spanRows}">${unitQty}</td>
-      <td class="rq-desc-cell">${App.esc(allRows[0].name)}</td>
-      <td class="rq-subtotal-cell">${App.formatPrice(allRows[0].price)}</td>
+      <td class="rq-desc-cell">${App.esc(firstRow.name)}</td>
+      <td class="rq-subtotal-cell">${App.formatPrice(firstRow.price)}</td>
     </tr>`;
 
     for (let i = 1; i < allRows.length; i++) {
       const row = allRows[i];
-      /* Visual separator before parts section */
-      const isSeparator = i === labor.length && parts.length > 0;
-      const style = isSeparator ? ' style="border-top:1.5px solid #ccc;"' : "";
+      const isFirstPart = hasBoth && i === labor.length;
+      const style = isFirstPart ? ' style="border-top:2px solid #111;"' : "";
       tableBody += `<tr${style}>
         <td class="rq-desc-cell">${App.esc(row.name)}</td>
         <td class="rq-subtotal-cell">${App.formatPrice(row.price)}</td>
       </tr>`;
     }
   }
-
-  /* ── Payment option text ─────────────────────────────────── */
-  const opt1Text = `Full payment upon receipt of the quotation, a ${discPct}% discount from the total price is applicable. Fee of ${App.peso.format(option1Price)}`;
-  const opt2Text = `Full payment after the completion of the VR repair, total fee is ${App.peso.format(option2Price)}`;
 
   const warrantyNote     = App.esc(data.warrantyNote     || "6 months warranty for parts and services (free of charge)");
   const orderTerms       = App.nl2br(data.orderTerms     || "VRXE will exercise due care in handling and delivering the product. However, we shall not be held liable for any damages incurred during or after delivery, except in cases where negligence on our part is clearly established.");
@@ -120,9 +113,15 @@ App.renderPreview = () => {
         <tbody>${tableBody}</tbody>
       </table>
 
-      <div class="rq-nothing">*nothing follows*</div>
+      <!-- ── Total Summary ──────────────────────────────────── -->
+      <div class="rq-total-summary">
+        <div class="rq-total-row rq-total-grand">
+          <span>Total Amount Due</span>
+          <span>${App.formatPrice(total)}</span>
+        </div>
+      </div>
 
-      <!-- ── Conforme + Payment Terms ───────────────────────── -->
+      <!-- ── Conforme ───────────────────────────────────────── -->
       <div class="rq-conforme-row">
         <div class="rq-conforme-line"></div>
         <div class="rq-conforme-name">${App.esc(data.clientName || "Client Name")}${data.clientCompany ? "<br>" + App.esc(data.clientCompany) : ""}</div>
@@ -147,8 +146,9 @@ App.renderPreview = () => {
         <div class="rq-footer-right">
           <div class="rq-payment-section">
             <div class="rq-payment-title">PAYMENT TERMS</div>
-            <p class="rq-option"><em><strong>OPTION 1:</strong> ${App.esc(opt1Text)}</em></p>
-            <p class="rq-option"><em><strong>Option 2:</strong> ${App.esc(opt2Text)}</em></p>
+            ${data.paymentTerms
+              ? `<p class="rq-option">${App.nl2br(data.paymentTerms)}</p>`
+              : ""}
 
             <div class="rq-bank-grid">
               <span class="rq-bank-label">BANK / E-WALLET</span>
