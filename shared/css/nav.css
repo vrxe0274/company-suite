@@ -83,13 +83,26 @@
     font-weight: 700;
     letter-spacing: .01em;
   }
+  /* Short label on rail, full label on bottom nav */
+  .feature-rail .fnav-label-full { display: none; }
+  .feature-rail .fnav-label-short { display: inline; }
+
+  /* ── Per-feature color tokens ───────────────────────────────── */
+  .feature-rail .fnav-item[data-key="home"]             { --fc: #64748B; --fc-soft: #F1F5F9; --fc-glow: rgba(100,116,139,.25); }
+  .feature-rail .fnav-item[data-key="event-quotation"]  { --fc: #3B82F6; --fc-soft: #EFF6FF; --fc-glow: rgba(59,130,246,.28); }
+  .feature-rail .fnav-item[data-key="repair-quotation"] { --fc: #F97316; --fc-soft: #FFF7ED; --fc-glow: rgba(249,115,22,.28);  }
+  .feature-rail .fnav-item[data-key="sales-receipt"]    { --fc: #10B981; --fc-soft: #ECFDF5; --fc-glow: rgba(16,185,129,.28); }
+
   .feature-rail .fnav-item:hover {
-    background: var(--soft, #EEF2FF);
-    color: var(--text, #14131A);
+    background: var(--fc-soft);
+    color: var(--fc);
+    border-top: 2px solid var(--fc);
+    box-shadow: 0 0 0 1px var(--fc-glow), 0 4px 14px var(--fc-glow);
   }
   .feature-rail .fnav-item.is-active {
-    background: var(--brand-soft, #EFF6FF);
-    color: var(--brand, #2563EB);
+    background: var(--fc-soft);
+    color: var(--fc);
+    border-top: 2px solid var(--fc);
   }
 
   .feature-bottomnav { display: none !important; }
@@ -126,7 +139,17 @@
   }
   .feature-bottomnav .fnav-icon svg { width: 21px; height: 21px; }
   .feature-bottomnav .fnav-label { font-size: 10.5px; letter-spacing: .01em; }
-  .feature-bottomnav .fnav-item.is-active { color: var(--brand, #2563EB); }
+  .feature-bottomnav .fnav-label-short { display: none; }
+  .feature-bottomnav .fnav-label-full  { display: inline; }
+
+  /* Per-feature colors on bottom nav */
+  .feature-bottomnav .fnav-item[data-key="home"]             { --fc: #64748B; }
+  .feature-bottomnav .fnav-item[data-key="event-quotation"]  { --fc: #3B82F6; }
+  .feature-bottomnav .fnav-item[data-key="repair-quotation"] { --fc: #F97316; }
+  .feature-bottomnav .fnav-item[data-key="sales-receipt"]    { --fc: #10B981; }
+
+  .feature-bottomnav .fnav-item:hover  { color: var(--fc); }
+  .feature-bottomnav .fnav-item.is-active { color: var(--fc); }
 
   /* Reserve space so the bottom bar never covers feature content. */
   body.has-feature-nav .app-layout,

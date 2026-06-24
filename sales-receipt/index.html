@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Repair Quotation</title>
+  <title>Sales Receipt</title>
 
-  <meta name="description" content="Create VRXE repair quotations for VR unit servicing and export them to PDF." />
+  <meta name="description" content="Create polished business receipts and export them to PDF." />
   <meta name="theme-color" content="#ffffff" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="repair.css" />
+  <link rel="stylesheet" href="receipt.css" />
   <link rel="stylesheet" href="../shared/css/responsive.css" />
   <link rel="stylesheet" href="../shared/css/nav.css" />
 
@@ -23,22 +23,26 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="VRXE Repair" />
+  <meta name="apple-mobile-web-app-title" content="Sales Receipt" />
 </head>
 <body>
   <div data-include="partials/header.html"></div>
 
   <main class="app-layout">
+    <!-- Sidebar -->
     <div data-include="partials/tabs.html"></div>
 
+    <!-- Form content -->
     <div class="form-content form-panel">
       <div data-include="partials/form-panels.html"></div>
       <div data-include="../shared/partials/form-footer.html"></div>
     </div>
 
+    <!-- Preview panel -->
     <div data-include="partials/preview.html"></div>
   </main>
 
+  <div data-include="partials/item-template.html"></div>
   <div data-include="partials/admin-modal.html"></div>
 
   <script defer src="js/config.js"></script>
@@ -58,6 +62,7 @@
   <script defer src="js/htmlIncludes.js"></script>
   <script defer src="../shared/js/featureNav.js"></script>
 
+  <!-- Service worker registration (root scope controls all pages) -->
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {

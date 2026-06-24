@@ -18,9 +18,9 @@
   "use strict";
 
   var path = location.pathname.replace(/\\/g, "/");
-  var feature = /\/receipt(\/|$)/.test(path)            ? "receipt"
-              : /\/repair-quotation(\/|$)/.test(path)   ? "repair-quotation"
-              : /\/quotation(\/|$)/.test(path)          ? "quotation"
+  var feature = /\/sales-receipt(\/|$)/.test(path)       ? "sales-receipt"
+              : /\/repair-quotation(\/|$)/.test(path)    ? "repair-quotation"
+              : /\/event-quotation(\/|$)/.test(path)     ? "event-quotation"
               : "home";
 
   /* Home page is the launcher — no switcher chrome needed. */
@@ -31,13 +31,13 @@
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" ' +
       'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
       '<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/><path d="M9.5 20v-6h5v6"/></svg>',
-    quotation:
+    "event-quotation":
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" ' +
       'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
       '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>' +
       '<path d="M14 3v5h5"/><line x1="8.5" y1="13" x2="15.5" y2="13"/>' +
       '<line x1="8.5" y1="16.5" x2="13" y2="16.5"/></svg>',
-    receipt:
+    "sales-receipt":
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" ' +
       'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
       '<path d="M6 3h12v18l-3-1.6L12 21l-3-1.6L6 21z"/>' +
@@ -51,21 +51,25 @@
 
   /* Derive the site root from the current URL so absolute paths work
      both locally (served from /) and on GitHub Pages (served from /repo/). */
-  var base = location.pathname.replace(/\/(quotation|receipt|repair-quotation)(\/.*)?$/, "/");
+  var base = location.pathname.replace(/\/(event-quotation|sales-receipt|repair-quotation)(\/.*)?$/, "/");
 
   var ITEMS = [
-    { key: "home",             href: base,                          label: "Home" },
-    { key: "quotation",        href: base + "quotation/",           label: "Quotation" },
-    { key: "receipt",          href: base + "receipt/",             label: "Receipt" },
-    { key: "repair-quotation", href: base + "repair-quotation/",    label: "Repair" }
+    { key: "home",             href: base,                           label: "Home",         short: "Home"    },
+    { key: "event-quotation",  href: base + "event-quotation/",      label: "Event Quote",  short: "Event"   },
+    { key: "repair-quotation", href: base + "repair-quotation/",     label: "Repair Quote", short: "Repair"  },
+    { key: "sales-receipt",    href: base + "sales-receipt/",        label: "Sales Receipt",short: "Receipt" }
   ];
 
   function itemHTML(it) {
     var active = it.key === feature;
     return '<a class="fnav-item' + (active ? " is-active" : "") + '" href="' + it.href + '"' +
+           ' data-key="' + it.key + '"' +
            (active ? ' aria-current="page"' : "") + '>' +
            '<span class="fnav-icon">' + ICON[it.key] + "</span>" +
-           '<span class="fnav-label">' + it.label + "</span></a>";
+           '<span class="fnav-label">' +
+             '<span class="fnav-label-short">' + it.short + "</span>" +
+             '<span class="fnav-label-full">'  + it.label + "</span>" +
+           "</span></a>";
   }
 
   var links = ITEMS.map(itemHTML).join("");

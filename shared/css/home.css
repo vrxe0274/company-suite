@@ -4,18 +4,25 @@
 
 
 :root {
-  --bg:          #FFFFFF;
-  --card:        #FFFFFF;
-  --text:        #111118;
-  --muted:       #72708A;
-  --line:        #E8E6F0;
-  --quote:       #1746C8;
-  --quote-soft:  #F0F4FF;
-  --receipt:     #0F7B5A;
-  --receipt-soft:#F0FAF6;
-  --font-ui:     'Figtree', system-ui, -apple-system, sans-serif;
-  --font-display:'DM Serif Display', Georgia, serif;
-  --ease:        cubic-bezier(0.16, 1, 0.3, 1);
+  --bg:           #FFFFFF;
+  --card:         #FFFFFF;
+  --text:         #111118;
+  --muted:        #72708A;
+  --line:         #E8E6F0;
+  --font-ui:      'Figtree', system-ui, -apple-system, sans-serif;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --ease:         cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Feature palette — shared with nav.css */
+  --event:        #3B82F6;
+  --event-soft:   #EFF6FF;
+  --event-glow:   rgba(59, 130, 246, .22);
+  --repair:       #F97316;
+  --repair-soft:  #FFF7ED;
+  --repair-glow:  rgba(249, 115, 22, .22);
+  --sales:        #10B981;
+  --sales-soft:   #ECFDF5;
+  --sales-glow:   rgba(16, 185, 129, .22);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -122,19 +129,34 @@ body {
   inset: 0 0 auto 0;
   height: 3px;
   border-radius: 20px 20px 0 0;
-  opacity: 0;
+  opacity: .4;
   transition: opacity .2s var(--ease);
 }
 
-.home-card[data-feature="quotation"]::before { background: var(--quote); }
-.home-card[data-feature="receipt"]::before   { background: var(--receipt); }
+.home-card[data-feature="event-quotation"]::before  { background: var(--event); }
+.home-card[data-feature="repair-quotation"]::before { background: var(--repair); }
+.home-card[data-feature="sales-receipt"]::before    { background: var(--sales); }
 
 .home-card:hover,
 .home-card:focus-visible {
   transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(17, 17, 24, .12), 0 3px 8px rgba(17, 17, 24, .06);
-  border-color: transparent;
   outline: none;
+}
+
+.home-card[data-feature="event-quotation"]:hover,
+.home-card[data-feature="event-quotation"]:focus-visible {
+  border-color: var(--event);
+  box-shadow: 0 0 0 1px var(--event-glow), 0 12px 36px var(--event-glow);
+}
+.home-card[data-feature="repair-quotation"]:hover,
+.home-card[data-feature="repair-quotation"]:focus-visible {
+  border-color: var(--repair);
+  box-shadow: 0 0 0 1px var(--repair-glow), 0 12px 36px var(--repair-glow);
+}
+.home-card[data-feature="sales-receipt"]:hover,
+.home-card[data-feature="sales-receipt"]:focus-visible {
+  border-color: var(--sales);
+  box-shadow: 0 0 0 1px var(--sales-glow), 0 12px 36px var(--sales-glow);
 }
 
 .home-card:hover::before,
@@ -149,8 +171,9 @@ body {
   border-radius: 12px;
 }
 .home-card-icon svg { width: 24px; height: 24px; }
-.home-card[data-feature="quotation"] .home-card-icon { background: var(--quote-soft);   color: var(--quote); }
-.home-card[data-feature="receipt"]   .home-card-icon { background: var(--receipt-soft); color: var(--receipt); }
+.home-card[data-feature="event-quotation"]  .home-card-icon { background: var(--event-soft);  color: var(--event);  }
+.home-card[data-feature="repair-quotation"] .home-card-icon { background: var(--repair-soft); color: var(--repair); }
+.home-card[data-feature="sales-receipt"]    .home-card-icon { background: var(--sales-soft);  color: var(--sales);  }
 
 .home-card-title { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -.02em; }
 .home-card-desc  { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.55; flex: 1; }
@@ -168,8 +191,9 @@ body {
 .home-card:focus-visible .home-card-cta {
   gap: 10px;
 }
-.home-card[data-feature="quotation"] .home-card-cta { color: var(--quote); }
-.home-card[data-feature="receipt"]   .home-card-cta { color: var(--receipt); }
+.home-card[data-feature="event-quotation"]  .home-card-cta { color: var(--event);  }
+.home-card[data-feature="repair-quotation"] .home-card-cta { color: var(--repair); }
+.home-card[data-feature="sales-receipt"]    .home-card-cta { color: var(--sales);  }
 
 .home-foot {
   font-size: 12px;
@@ -203,7 +227,7 @@ body {
   .home-sub          { font-size: 13px; max-width: 30ch; }
   .home-cards        { grid-template-columns: 1fr; max-width: 380px; gap: 10px; }
   .home-card         { padding: 18px; gap: 10px; border-radius: 16px; }
-  .home-card::before { border-radius: 16px 16px 0 0; }
+  .home-card::before    { border-radius: 16px 16px 0 0; }
   .home-card-icon    { width: 40px; height: 40px; border-radius: 10px; }
   .home-card-icon svg { width: 20px; height: 20px; }
   .home-card-title   { font-size: 16px; }
