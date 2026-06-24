@@ -79,7 +79,7 @@ App.renderPreview = () => {
           </div>
         </div>
         <div class="rq-ref-box">
-          <div class="rq-ref-label">RECEIPT NUMBER</div>
+          <div class="rq-ref-label">QUOTATION NUMBER</div>
           <div class="rq-ref-value">${App.esc(data.quoteCode || "—")}</div>
         </div>
       </div>
@@ -130,15 +130,15 @@ App.renderPreview = () => {
       <!-- ── Footer two-column ──────────────────────────────── -->
       <div class="rq-footer">
         <div class="rq-footer-left">
-          <div class="rq-warranty-badge">📄 ${warrantyNote}</div>
+          <div class="rq-warranty-badge">${warrantyNote}</div>
 
           <div class="rq-terms-block">
-            <p class="rq-terms-heading"><strong>🛍 Order and Payment Terms:</strong></p>
+            <p class="rq-terms-heading"><strong>Order and Payment Terms:</strong></p>
             <p class="rq-terms-body">${orderTerms}</p>
           </div>
 
           <div class="rq-terms-block">
-            <p class="rq-terms-heading"><strong>🛠 Warranty Approval:</strong></p>
+            <p class="rq-terms-heading"><strong>Warranty Approval:</strong></p>
             <p class="rq-terms-body">${warrantyApproval}</p>
           </div>
         </div>

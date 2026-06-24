@@ -58,7 +58,7 @@ App.renderPreview = () => {
 
   const subtotal    = items.reduce((s, i) => s + (i.type !== "discount" ? i.total : 0), 0);
   const discounts   = items.reduce((s, i) => s + (i.type === "discount" ? Math.abs(i.total) : 0), 0);
-  const discountAmt = parseFloat(data.discount) || discounts;
+  const discountAmt = data.discount !== "" ? (parseFloat(data.discount) || 0) : discounts;
   const grandTotal  = Math.max(0, subtotal - discountAmt);
 
   /* Payment method badge */

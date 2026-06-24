@@ -1,7 +1,6 @@
 App.requiredFieldsByTab = {
   quote:  ["quoteCode", "quoteDate", "serviceAvailed"],
-  client: ["clientName", "clientAddress", "clientPhone"],
-  items:  []
+  client: ["clientName", "clientAddress", "clientPhone"]
 };
 
 App.isFieldFilled = (fieldId) => {
@@ -63,9 +62,10 @@ App.setActiveTab = (tabName) => {
 
   const currentIndex = App.tabOrder.indexOf(tabName);
   const isLast       = currentIndex === App.tabOrder.length - 1;
-  App.$("prevTabBtn").disabled = currentIndex === 0;
+  const prevBtn = App.$("prevTabBtn");
+  if (prevBtn) prevBtn.disabled = currentIndex === 0;
 
-  const nextLabel = App.$("nextTabBtn").querySelector("span");
+  const nextLabel = App.$("nextTabBtn")?.querySelector("span");
   if (nextLabel) nextLabel.textContent = isLast
     ? (window.innerWidth <= 767 ? "Preview" : "Back to Start")
     : "Next";

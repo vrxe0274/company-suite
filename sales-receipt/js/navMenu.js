@@ -41,7 +41,7 @@
     trigger = document.createElement("button");
     trigger.type = "button";
     trigger.className = "nav-dd-trigger";
-    trigger.setAttribute("aria-haspopup", "true");
+    trigger.setAttribute("aria-haspopup", "menu");
     trigger.setAttribute("aria-expanded", "false");
     trigger.innerHTML =
       '<span class="nav-dd-badge"></span>' +
@@ -62,6 +62,26 @@
     trigger.addEventListener("click", function (e) { e.stopPropagation(); toggle(); });
     document.addEventListener("click", function (e) { if (open && wrap && !wrap.contains(e.target)) close(); });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && open) close(); });
+
+    /* Keyboard navigation within the open menu (WCAG 2.1.1) */
+    menu.addEventListener("keydown", function (e) {
+      var items = Array.prototype.slice.call(menu.querySelectorAll(".nav-dd-item"));
+      var idx   = items.indexOf(document.activeElement);
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (items[(idx + 1) % items.length]) items[(idx + 1) % items.length].focus();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        var prev = (idx - 1 + items.length) % items.length;
+        if (items[prev]) items[prev].focus();
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        if (items[0]) items[0].focus();
+      } else if (e.key === "End") {
+        e.preventDefault();
+        if (items[items.length - 1]) items[items.length - 1].focus();
+      }
+    });
 
     wrap.appendChild(trigger);
     wrap.appendChild(menu);
@@ -145,6 +165,10 @@
     open = true;
     wrap.classList.add("is-open");
     trigger.setAttribute("aria-expanded", "true");
+    setTimeout(function () {
+      var first = menu.querySelector(".nav-dd-item");
+      if (first) first.focus();
+    }, 40);
   }
   function close() {
     open = false;
@@ -187,19 +211,5 @@
     apply();
   }
 
-  function waitAndStart(tries) {
-    tries = tries || 0;
-    if (document.querySelector(".tabs") && document.querySelector(".form-content")) {
-      start();
-      return;
-    }
-    if (tries > 80) return;
-    setTimeout(function () { waitAndStart(tries + 1); }, 120);
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", function () { waitAndStart(0); });
-  } else {
-    waitAndStart(0);
-  }
+  document.addEventListener("vrxe:ready", function () { start(); });
 })();

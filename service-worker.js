@@ -37,7 +37,6 @@ const FEATURE_FILES = (feature, extraCss) => [
   `${BASE}${feature}/partials/tabs.html`,
   `${BASE}${feature}/partials/form-panels.html`,
   `${BASE}${feature}/partials/preview.html`,
-  `${BASE}${feature}/partials/item-template.html`,
   `${BASE}${feature}/partials/admin-modal.html`
 ];
 

@@ -8,8 +8,13 @@ App.$ = (id) => document.getElementById(id);
 
 App.clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
+App.debounce = (fn, delay) => {
+  let t;
+  return function (...args) { clearTimeout(t); t = setTimeout(() => fn.apply(this, args), delay); };
+};
+
 App.esc = (value = "") => {
-  return String(value).replace(/[&<>'"]/g, (char) => ({
+  return String(value ?? "").replace(/[&<>'"]/g, (char) => ({
     "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",

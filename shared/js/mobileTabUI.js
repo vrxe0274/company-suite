@@ -163,6 +163,10 @@
 
     if (!formPanel || !previewPanel) return;
 
+    /* Assign IDs so aria-controls on the tab buttons resolve correctly */
+    if (!formPanel.id)    formPanel.id    = "mptb-forms-panel";
+    if (!previewPanel.id) previewPanel.id = "mptb-preview-panel";
+
     buildTabBar();
     buildMobileDownloadBtn();
     switchTab(activeTab);
@@ -215,16 +219,7 @@
     /* If desktop: do nothing — standard styles take over */
   }
 
-  /* Hook into App.init so we run after all partials are loaded */
-  const _originalInit = window.App && window.App.init;
-  if (typeof _originalInit === "function") {
-    window.App.init = function (...args) {
-      _originalInit.apply(this, args);
-      init();
-    };
-  } else {
-    /* Fallback: wait for DOMContentLoaded */
-    document.addEventListener("DOMContentLoaded", () => setTimeout(init, 450));
-  }
+  /* Run after htmlIncludes.js finishes loading partials and calling App.init() */
+  document.addEventListener("vrxe:ready", () => init());
 
 })();

@@ -20,7 +20,7 @@ App.renderAmount = (item) => {
   return `
     ${item.originalPrice ? `<span class="old-price">${App.peso.format(item.originalPrice)}</span>` : ""}
     ${item.finalPrice    ? `<span class="final-price">${App.peso.format(item.finalPrice)}</span>`  : ""}
-    ${item.originalPrice && item.finalPrice && item.originalPrice !== item.finalPrice
+    ${item.originalPrice && item.finalPrice && item.originalPrice > item.finalPrice
       ? `<span class="discount-note">(discounted)</span>` : ""}
   `;
 };

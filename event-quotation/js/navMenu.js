@@ -51,7 +51,7 @@
     trigger = document.createElement("button");
     trigger.type = "button";
     trigger.className = "nav-dd-trigger";
-    trigger.setAttribute("aria-haspopup", "true");
+    trigger.setAttribute("aria-haspopup", "menu");
     trigger.setAttribute("aria-expanded", "false");
     trigger.innerHTML =
       '<span class="nav-dd-badge"></span>' +
@@ -72,6 +72,25 @@
     trigger.addEventListener("click", (e) => {
       e.stopPropagation();
       toggle();
+    });
+
+    /* Keyboard navigation within the open menu (WCAG 2.1.1) */
+    menu.addEventListener("keydown", (e) => {
+      const items = [...menu.querySelectorAll(".nav-dd-item")];
+      const idx   = items.indexOf(document.activeElement);
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        items[(idx + 1) % items.length]?.focus();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        items[(idx - 1 + items.length) % items.length]?.focus();
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        items[0]?.focus();
+      } else if (e.key === "End") {
+        e.preventDefault();
+        items[items.length - 1]?.focus();
+      }
     });
     document.addEventListener("click", (e) => {
       if (open && wrap && !wrap.contains(e.target)) close();
@@ -162,6 +181,7 @@
     open = true;
     wrap.classList.add("is-open");
     trigger.setAttribute("aria-expanded", "true");
+    setTimeout(() => menu.querySelector(".nav-dd-item")?.focus(), 40);
   }
 
   function close() {

@@ -18,6 +18,7 @@ async function ensurePdfLibs() {
   await Promise.all(PDF_LIBS.map(loadScript));
 }
 
+/* pdfFix.js wraps this function to handle scale reset and error feedback. */
 App.downloadPdf = async () => {
   await ensurePdfLibs();
 
@@ -41,6 +42,6 @@ App.downloadPdf = async () => {
     pdf.addImage(imgData, "PNG", 0, 0, pageWidth, pageHeight);
   }
 
-  const safeCode = (App.$("receiptCode").value || "Receipt").replace(/[^a-z0-9-]/gi, "_");
+  const safeCode = (App.$("receiptCode")?.value || "Receipt").replace(/[^a-z0-9-]/gi, "_");
   pdf.save(`${safeCode}.pdf`);
 };

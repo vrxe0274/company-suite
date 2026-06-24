@@ -8,5 +8,5 @@ App.generateQuoteCode = () => {
   let seq = parseInt(localStorage.getItem(key) || "0", 10) + 1;
   localStorage.setItem(key, String(seq));
 
-  return `${String(year).slice(-2)}00-00VR${String(seq).padStart(2, "0")}-${String(seq).padStart(3, "0")}`;
+  return `${String(year).slice(-2)}00-00VR${String(seq).padStart(3, "0")}-${String(seq).padStart(3, "0")}`;
 };

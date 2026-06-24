@@ -17,6 +17,7 @@ App.init = () => {
   App.$("prevTabBtn").addEventListener("click", App.goToPrevTab);
 
   App.$("newReceiptBtn").addEventListener("click", () => {
+    if (!confirm("Start a new receipt? A new receipt number will be generated.")) return;
     App.$("receiptCode").value = App.generateReceiptCode();
     App.renderPreview();
   });
@@ -47,6 +48,10 @@ App.init = () => {
 
   App.setActiveTab("receipt");
   App.defaultItems.forEach((item) => App.addItem(item));
-  App.renderPreview();
+
+  /* Debounce subsequent renders — initial render below is still immediate */
+  const rawRender = App.renderPreview;
+  App.renderPreview = App.debounce(rawRender, 80);
+  rawRender();
   requestAnimationFrame(App.fitPreviewToPanel);
 };

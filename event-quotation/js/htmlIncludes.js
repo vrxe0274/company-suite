@@ -24,13 +24,23 @@ App.loadHtmlIncludes = async () => {
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     await App.loadHtmlIncludes();
-    App.init();
-    document.dispatchEvent(new CustomEvent("vrxe:ready"));
   } catch (error) {
-    console.error(error);
+    console.error("Failed to load HTML partials:", error);
     document.body.insertAdjacentHTML(
       "afterbegin",
       `<div class="load-error">Unable to load HTML partials. Please run this project using a local server such as VS Code Live Server.</div>`
+    );
+    return;
+  }
+
+  try {
+    App.init();
+    document.dispatchEvent(new CustomEvent("vrxe:ready"));
+  } catch (error) {
+    console.error("App initialization error:", error);
+    document.body.insertAdjacentHTML(
+      "afterbegin",
+      `<div class="load-error">App failed to initialize: ${error.message}</div>`
     );
   }
 });

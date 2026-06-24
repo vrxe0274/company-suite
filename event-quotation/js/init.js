@@ -18,6 +18,7 @@ App.init = () => {
   App.$("prevTabBtn").addEventListener("click", App.goToPrevTab);
 
   App.$("newQuoteBtn").addEventListener("click", () => {
+    if (!confirm("Start a new quote? A new quote number will be generated.")) return;
     App.$("quoteCode").value = App.generateQuoteCode();
     App.renderPreview();
   });
@@ -48,6 +49,10 @@ App.init = () => {
 
   App.setActiveTab("quote");
   App.defaultServices.forEach((service) => App.addItem(service));
-  App.renderPreview();
+
+  /* Debounce subsequent renders — initial render below is still immediate */
+  const rawRender = App.renderPreview;
+  App.renderPreview = App.debounce(rawRender, 80);
+  rawRender();
   requestAnimationFrame(App.fitPreviewToPanel);
 };

@@ -1,3 +1,6 @@
+/* Client-side password — protects the admin UI only, not data.
+   Anyone with DevTools access can bypass this. Intentional for
+   a local static app with no server backend. */
 const ADMIN_PASSWORD = "vrxeadmin";
 App.currentAdminTab = "payment";
 
