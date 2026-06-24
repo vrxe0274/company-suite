@@ -1,0 +1,333 @@
+/* ============================================================
+   VRXE Repair Quotation — PDF Document Template Styles
+   Matches the VRXE repair quotation format.
+   IMPORTANT: These rules are preserved byte-for-byte so the
+   exported PDF renders identically. Do not restyle.
+   ============================================================ */
+
+.repair-page {
+  width: 794px;
+  min-height: 1123px;
+  margin: 0;
+  background: #fff;
+  color: #1A1A1A;
+  border: 1px solid #DDD;
+  padding: 44px 56px 40px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10.5px;
+  line-height: 1.35;
+  position: relative;
+}
+
+.repair-page p { margin: 0; }
+
+/* ── Page Header: Logo + QUOTATION title ──────────────────── */
+.rq-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.rq-logo {
+  width: 62px;
+  height: auto;
+  object-fit: contain;
+}
+
+.rq-title {
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  color: #111;
+  margin: 0;
+  line-height: 1;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ── Bill To + Receipt Number ─────────────────────────────── */
+.rq-doc-head {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  border-top: 2px solid #111;
+  border-bottom: 1px solid #CCC;
+  margin-bottom: 0;
+}
+
+.rq-bill-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #1A1A1A;
+  color: #fff;
+  min-height: 72px;
+}
+
+.rq-bill-label {
+  font-weight: 900;
+  font-size: 10px;
+  letter-spacing: .06em;
+  white-space: nowrap;
+  padding-top: 1px;
+  flex-shrink: 0;
+}
+
+.rq-bill-info { font-size: 10.5px; line-height: 1.55; }
+.rq-bill-info strong { font-size: 11.5px; }
+
+.rq-ref-box {
+  border-left: 2px solid #111;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.rq-ref-label {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #555;
+}
+
+.rq-ref-value {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: #111;
+}
+
+/* ── Service Strip ────────────────────────────────────────── */
+.rq-service-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 2px solid #111;
+  border-top: 1px solid #CCC;
+}
+
+.rq-strip-col {
+  padding: 8px 14px;
+  border-right: 1px solid #DDD;
+}
+.rq-strip-col:last-child { border-right: none; }
+
+.rq-strip-label {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #555;
+  margin-bottom: 3px;
+}
+
+.rq-strip-value {
+  font-size: 11px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* ── Items Table ──────────────────────────────────────────── */
+.rq-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+.rq-table th {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-weight: 800;
+  text-align: left;
+  padding: 7px 10px;
+  border-bottom: 1.5px solid #999;
+  border-top: 1px solid #DDD;
+  color: #444;
+  background: #FAFAFA;
+}
+
+.rq-th-items { width: 18%; }
+.rq-th-qty   { width: 7%; text-align: center; }
+.rq-th-desc  { width: auto; }
+.rq-th-sub   { width: 18%; text-align: right; }
+
+.rq-table td {
+  vertical-align: top;
+  padding: 7px 10px;
+  border-bottom: 1px solid #E8E8E8;
+  font-size: 10.5px;
+}
+
+.rq-unit-cell {
+  font-size: 10px;
+  font-weight: 700;
+  color: #444;
+  vertical-align: top;
+  border-right: 1px solid #E8E8E8;
+  line-height: 1.45;
+}
+.rq-unit-cell strong {
+  display: block;
+  font-size: 11.5px;
+  color: #111;
+  font-weight: 800;
+  margin-top: 2px;
+}
+
+.rq-qty-cell {
+  text-align: center;
+  font-weight: 700;
+  border-right: 1px solid #E8E8E8;
+  vertical-align: top;
+}
+
+.rq-desc-cell { color: #222; }
+
+.rq-subtotal-cell {
+  text-align: right;
+  white-space: nowrap;
+  font-weight: 600;
+  color: #111;
+}
+
+.rq-first-row td { padding-top: 9px; }
+
+/* ── Nothing Follows ──────────────────────────────────────── */
+.rq-nothing {
+  font-style: italic;
+  color: #888;
+  font-size: 10px;
+  text-align: center;
+  padding: 8px 0 6px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+/* ── Conforme Row ─────────────────────────────────────────── */
+.rq-conforme-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 10px 0 6px;
+  padding-right: 4px;
+}
+
+.rq-conforme-line {
+  width: 180px;
+  border-top: 1px solid #111;
+  margin-bottom: 4px;
+}
+
+.rq-conforme-name {
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: #333;
+  text-align: right;
+}
+
+/* ── Footer Two-Column ────────────────────────────────────── */
+.rq-footer {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 0 16px;
+  margin-top: 8px;
+  align-items: start;
+}
+
+/* ── Footer Left: Warranty + Terms ───────────────────────── */
+.rq-footer-left { font-size: 9.5px; line-height: 1.45; }
+
+.rq-warranty-badge {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #15803D;
+  margin-bottom: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.rq-terms-block { margin-bottom: 8px; }
+
+.rq-terms-heading {
+  font-size: 10px;
+  font-weight: 800;
+  margin-bottom: 3px !important;
+}
+
+.rq-terms-body {
+  color: #444;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+/* ── Footer Right: Payment Terms ─────────────────────────── */
+.rq-footer-right { font-size: 9.5px; }
+
+.rq-payment-section {
+  border: 1px solid #DDD;
+  padding: 10px 12px;
+  border-radius: 3px;
+}
+
+.rq-payment-title {
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-bottom: 6px;
+  color: #111;
+}
+
+.rq-option {
+  font-size: 9px;
+  line-height: 1.45;
+  margin-bottom: 5px !important;
+  color: #333;
+}
+
+.rq-bank-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 10px;
+  margin: 8px 0;
+  font-size: 9.5px;
+  border-top: 1px solid #E8E8E8;
+  border-bottom: 1px solid #E8E8E8;
+  padding: 6px 0;
+}
+
+.rq-bank-label {
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 8.5px;
+  letter-spacing: .04em;
+  color: #555;
+  white-space: nowrap;
+}
+
+.rq-bank-value {
+  font-family: 'Courier New', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #111;
+}
+
+.rq-notes-section { margin-top: 6px; }
+
+.rq-notes-label {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #555;
+  margin-bottom: 3px;
+}
+
+.rq-notes-body {
+  font-size: 9px;
+  color: #555;
+  line-height: 1.45;
+}

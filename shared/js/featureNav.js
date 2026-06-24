@@ -18,8 +18,9 @@
   "use strict";
 
   var path = location.pathname.replace(/\\/g, "/");
-  var feature = /\/receipt(\/|$)/.test(path)   ? "receipt"
-              : /\/quotation(\/|$)/.test(path) ? "quotation"
+  var feature = /\/receipt(\/|$)/.test(path)            ? "receipt"
+              : /\/repair-quotation(\/|$)/.test(path)   ? "repair-quotation"
+              : /\/quotation(\/|$)/.test(path)          ? "quotation"
               : "home";
 
   /* Home page is the launcher — no switcher chrome needed. */
@@ -40,17 +41,23 @@
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" ' +
       'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
       '<path d="M6 3h12v18l-3-1.6L12 21l-3-1.6L6 21z"/>' +
-      '<line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/></svg>'
+      '<line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/></svg>',
+    "repair-quotation":
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94' +
+      'l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'
   };
 
   /* Derive the site root from the current URL so absolute paths work
      both locally (served from /) and on GitHub Pages (served from /repo/). */
-  var base = location.pathname.replace(/\/(quotation|receipt)(\/.*)?$/, "/");
+  var base = location.pathname.replace(/\/(quotation|receipt|repair-quotation)(\/.*)?$/, "/");
 
   var ITEMS = [
-    { key: "home",      href: base,                   label: "Home" },
-    { key: "quotation", href: base + "quotation/",    label: "Quotation" },
-    { key: "receipt",   href: base + "receipt/",      label: "Receipt" }
+    { key: "home",             href: base,                          label: "Home" },
+    { key: "quotation",        href: base + "quotation/",           label: "Quotation" },
+    { key: "receipt",          href: base + "receipt/",             label: "Receipt" },
+    { key: "repair-quotation", href: base + "repair-quotation/",    label: "Repair" }
   ];
 
   function itemHTML(it) {

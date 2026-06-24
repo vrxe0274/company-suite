@@ -1,0 +1,89 @@
+<div class="tab-panels">
+
+  <!-- Step 1 — Quotation Information -->
+  <section class="tab-panel is-active" id="tab-quote">
+    <div class="section-title">
+      <div class="section-heading">
+        <p class="section-kicker">Step 1</p>
+        <h2>Quote Info</h2>
+      </div>
+      <button id="newQuoteBtn" class="ghost-btn" type="button">New Receipt No.</button>
+    </div>
+
+    <div class="grid two">
+      <label>Receipt No.<input id="quoteCode" type="text" /></label>
+      <label>Date of Service<input id="quoteDate" type="date" /></label>
+    </div>
+    <div class="grid two">
+      <label>Service Availed<input id="serviceAvailed" type="text" placeholder="e.g. Repair Unit" /></label>
+      <label>Representative Name<input id="repName" type="text" placeholder="Staff name or NA" /></label>
+    </div>
+  </section>
+
+  <!-- Step 2 — Client / Bill To -->
+  <section class="tab-panel" id="tab-client">
+    <div class="section-title">
+      <div class="section-heading">
+        <p class="section-kicker">Step 2</p>
+        <h2>Client</h2>
+      </div>
+    </div>
+
+    <label>Client / Company Name<input id="clientName" type="text" placeholder="Full name or company" /></label>
+    <label>Company / Organization<input id="clientCompany" type="text" placeholder="Optional" /></label>
+    <div class="grid two">
+      <label>Address<input id="clientAddress" type="text" placeholder="Street, city, province" /></label>
+      <label>Contact No.<input id="clientPhone" type="text" placeholder="Mobile / landline" /></label>
+    </div>
+  </section>
+
+  <!-- Step 3 — Items & Parts -->
+  <section class="tab-panel" id="tab-items">
+    <div class="section-title items-heading">
+      <div class="section-heading">
+        <p class="section-kicker">Step 3</p>
+        <h2>Items &amp; Parts</h2>
+      </div>
+    </div>
+
+    <!-- VR Unit info -->
+    <div class="rq-unit-info-card">
+      <p class="rq-unit-info-label">VR Unit</p>
+      <div class="grid two">
+        <label>Unit Name<input id="unitName" type="text" placeholder="e.g. Meta Quest 3" /></label>
+        <label>Quantity<input id="unitQty" type="number" min="1" placeholder="1" /></label>
+      </div>
+    </div>
+
+    <!-- Labor / Services -->
+    <div class="rq-items-group">
+      <div class="rq-group-header">
+        <h3 class="rq-group-title">
+          <span class="rq-group-badge rq-badge-labor">Labor &amp; Services</span>
+        </h3>
+        <button id="addLaborBtn" class="ghost-btn rq-add-btn" type="button">+ Add Labor</button>
+      </div>
+      <div class="rq-items-header-row">
+        <span>Description</span>
+        <span>Price (₱)</span>
+      </div>
+      <div id="laborList" class="rq-items-list"></div>
+    </div>
+
+    <!-- Parts -->
+    <div class="rq-items-group">
+      <div class="rq-group-header">
+        <h3 class="rq-group-title">
+          <span class="rq-group-badge rq-badge-parts">Parts</span>
+        </h3>
+        <button id="addPartBtn" class="ghost-btn rq-add-btn" type="button">+ Add Part</button>
+      </div>
+      <div class="rq-items-header-row">
+        <span>Part Name</span>
+        <span>Price (₱)</span>
+      </div>
+      <div id="partsList" class="rq-items-list"></div>
+    </div>
+  </section>
+
+</div>

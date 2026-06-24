@@ -1,0 +1,753 @@
+/* ============================================================
+   VRXE Repair Quotation Maker — UI Theme
+   Brand: Orange (#EA580C) — distinct from Event Quotation (blue)
+   ============================================================ */
+
+/* ── 1. Design Tokens ──────────────────────────────────────── */
+:root {
+  --bg:          #FFF8F5;
+  --card:        #FFF8F5;
+  --sidebar-bg:  #FFFFFF;
+  --input-bg:    #FFFAF8;
+  --soft:        #FFF0E8;
+  --item-bg:     #FFFAF8;
+  --header-bg:   #FFFFFF;
+
+  --text:        #1C1410;
+  --text-2:      #4A3B30;
+  --muted:       #9A8070;
+  --label:       #7A6558;
+
+  --line:               #EDE0D8;
+  --line-strong:        #D4C0B0;
+  --input-border:       #DCCFC8;
+  --input-border-focus: #EA580C;
+
+  --brand:      #EA580C;
+  --brand-soft: #FFF0E8;
+  --brand-ring: rgba(234, 88, 12, .15);
+
+  --btn-fill:   #1C1410;
+  --tab-active: var(--btn-fill);
+
+  --green:       #16A34A;
+  --green-bg:    #F0FDF4;
+  --green-light: #DCFCE7;
+  --amber:       #B45309;
+  --amber-bg:    #FFFCF4;
+  --red:         #DC2626;
+  --red-bg:      #FEF2F2;
+
+  --shadow-xs: 0 1px 2px rgba(28, 20, 16, .05);
+  --shadow-sm: 0 2px 8px rgba(28, 20, 16, .08), 0 1px 2px rgba(28, 20, 16, .04);
+  --shadow-md: 0 4px 18px rgba(28, 20, 16, .09), 0 1px 4px rgba(28, 20, 16, .05);
+  --shadow-lg: 0 16px 40px rgba(28, 20, 16, .13), 0 4px 10px rgba(28, 20, 16, .06);
+  --shadow-xl: 0 28px 64px rgba(28, 20, 16, .18), 0 6px 16px rgba(28, 20, 16, .09);
+
+  --r-xs:   5px;
+  --r-sm:   8px;
+  --r-md:   10px;
+  --r-lg:   14px;
+  --r-xl:   18px;
+  --r-pill: 999px;
+
+  --font-ui:   'Figtree', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── 2. Reset ──────────────────────────────────────────────── */
+html { overflow: hidden; height: 100%; }
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  overflow: hidden;
+}
+
+h1, h2, h3, p { margin-top: 0; }
+h1, h2        { margin-bottom: 0; }
+h3            { margin: 20px 0 10px; }
+::selection { background: var(--brand-soft); color: var(--text); }
+
+/* ── 3. Header ──────────────────────────────────────────────── */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 24px;
+  height: 62px;
+  background: var(--header-bg);
+  border-bottom: 1px solid rgba(234, 88, 12, .14);
+}
+
+.brand-wrap { display: flex; align-items: center; }
+.brand-text { display: flex; flex-direction: column; gap: 1px; }
+
+.eyebrow {
+  margin: 0;
+  color: #1C1410b6;
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  color: var(--text);
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* ── 4. Main Layout ─────────────────────────────────────────── */
+.app-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: calc(100vh - 62px);
+  overflow: hidden;
+}
+
+/* ── 5. Sidebar ─────────────────────────────────────────────── */
+.tabs {
+  flex: 0 0 186px;
+  width: 186px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--line);
+  padding: 20px 12px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tabs .sidebar-brand { display: none; }
+
+.tab-group-label {
+  margin: 14px 8px 6px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.tab-divider { height: 1px; margin: 8px 4px; background: var(--line); }
+
+.tab-btn {
+  width: 100%;
+  border: none;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  transition: background .15s var(--ease), color .15s, transform .1s;
+  letter-spacing: -.01em;
+}
+
+.tab-text { letter-spacing: -.01em; line-height: 1.25; }
+
+.tab-number {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 26px;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--soft);
+  color: var(--text-2);
+  border: 1.5px solid var(--line);
+  transition: background .15s, border-color .15s, color .15s;
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+}
+
+.tab-btn:hover:not(.is-active) { background: var(--soft); color: var(--text); }
+
+.tab-btn.is-active {
+  background: var(--tab-active);
+  color: #fff;
+  box-shadow: 0 4px 16px var(--brand-ring);
+}
+.tab-btn.is-active .tab-number {
+  background: rgba(255,255,255,.2);
+  border-color: rgba(255,255,255,.35);
+  color: #fff;
+}
+
+.tab-number.is-complete { background: var(--green); border-color: var(--green); color: #fff; }
+.tab-btn.is-active .tab-number.is-complete {
+  background: rgba(255,255,255,.25);
+  border-color: rgba(255,255,255,.5);
+  color: #fff;
+}
+
+/* Admin tab */
+#openAdminSettingsBtn.admin-tab {
+  margin-top: 2px;
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  color: var(--text-2);
+  border-radius: var(--r-md);
+  padding: 10px 12px;
+}
+#openAdminSettingsBtn.admin-tab:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--text);
+}
+#openAdminSettingsBtn.admin-tab .tab-number {
+  width: 26px; height: 26px; flex-basis: 26px; font-size: 13px;
+  background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 800;
+}
+#openAdminSettingsBtn.admin-tab .tab-text {
+  display: flex; flex-direction: column; gap: 1px; line-height: 1.2;
+  white-space: normal; min-width: 0;
+}
+#openAdminSettingsBtn.admin-tab .tab-text strong { font-size: 12.5px; font-weight: 700; color: var(--text); }
+#openAdminSettingsBtn.admin-tab .tab-text small {
+  color: var(--muted); font-size: 9px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+}
+.tab-btn.admin-tab.is-complete { border-color: var(--green); background: var(--green-bg); }
+
+.nav-dropdown { display: none; }
+
+/* ── 7. Form Content ─────────────────────────────────────────── */
+.form-content {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.tab-panels {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px 28px 14px;
+  background: var(--card);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+.tab-panels::-webkit-scrollbar       { width: 5px; }
+.tab-panels::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 99px; }
+
+.tab-panel { display: none; animation: fadeUp .18s var(--ease) both; }
+.tab-panel.is-active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 8. Tab Footer ──────────────────────────────────────────── */
+.tab-footer {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 28px 14px;
+  border-top: 1px solid var(--line);
+  background: var(--card);
+}
+
+/* ── 9. Section Titles ──────────────────────────────────────── */
+.section-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.section-heading { min-width: 0; }
+.section-kicker {
+  display: inline-block;
+  color: var(--muted);
+  margin-bottom: 5px;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -.04em;
+  color: var(--text);
+  line-height: 1.15;
+}
+.section-helper {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  margin: 4px 0 0;
+  line-height: 1.6;
+}
+
+/* ── 10. Form Fields ────────────────────────────────────────── */
+.grid { display: grid; gap: 14px; }
+.two  { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+label {
+  display: grid;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 11.5px;
+  color: var(--label);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+input, textarea {
+  width: 100%;
+  border: 1.5px solid var(--input-border);
+  border-radius: var(--r-sm);
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--input-bg);
+  outline: none;
+  transition: border-color .14s, box-shadow .14s, background .14s;
+  letter-spacing: -.01em;
+  line-height: 1.5;
+}
+input:hover, textarea:hover { border-color: var(--line-strong); background: #fff; }
+input:focus, textarea:focus {
+  border-color: var(--input-border-focus);
+  background: #fff;
+  box-shadow: 0 0 0 3px var(--brand-ring);
+}
+input::placeholder, textarea::placeholder {
+  color: #C8B8A8;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0;
+  text-transform: none;
+}
+textarea { resize: vertical; }
+input[type="date"]   { font-family: var(--font-ui); }
+input[type="number"] { font-family: var(--font-mono); font-size: 14px; }
+
+/* ── 11. Buttons ────────────────────────────────────────────── */
+.primary-btn, .ghost-btn {
+  border-radius: var(--r-sm);
+  padding: 10px 20px;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform .12s var(--ease), box-shadow .14s, opacity .14s;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+.btn-icon { flex-shrink: 0; }
+
+.primary-btn {
+  background: var(--btn-fill);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 14px var(--brand-ring);
+}
+.primary-btn:hover { opacity: .92; box-shadow: 0 6px 20px var(--brand-ring); transform: translateY(-1px); }
+.primary-btn:active { transform: translateY(0); box-shadow: 0 2px 8px var(--brand-ring); }
+
+.ghost-btn {
+  background: #fff;
+  color: var(--text);
+  border: 1.5px solid var(--line-strong);
+}
+.ghost-btn:hover { background: var(--soft); transform: translateY(-1px); }
+.ghost-btn:active { transform: translateY(0); }
+
+button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* ── 12. VR Unit Info Card ──────────────────────────────────── */
+.rq-unit-info-card {
+  border: 1.5px solid var(--line);
+  border-left: 3px solid var(--brand);
+  border-radius: var(--r-md);
+  background: var(--brand-soft);
+  padding: 14px 16px 4px;
+  margin-bottom: 20px;
+}
+.rq-unit-info-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--brand);
+  margin-bottom: 10px;
+}
+
+/* ── 13. Items Groups ───────────────────────────────────────── */
+.rq-items-group { margin-bottom: 20px; }
+
+.rq-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.rq-group-title { margin: 0; font-size: 13px; font-weight: 700; }
+
+.rq-group-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 11px;
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.rq-badge-labor {
+  background: #FFF7ED;
+  color: #C2410C;
+  border: 1px solid #FDBA74;
+}
+.rq-badge-parts {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+}
+
+.rq-add-btn { padding: 6px 14px; font-size: 12px; }
+
+.rq-items-header-row {
+  display: grid;
+  grid-template-columns: 1fr 120px 36px;
+  gap: 8px;
+  padding: 0 10px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.rq-items-list { display: grid; gap: 6px; }
+
+/* ── 14. Item Cards ─────────────────────────────────────────── */
+.ritem-card {
+  display: grid;
+  grid-template-columns: 1fr 120px 36px;
+  gap: 8px;
+  align-items: center;
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 8px 10px;
+  transition: border-color .14s, box-shadow .14s;
+}
+.ritem-card:hover { border-color: var(--line-strong); box-shadow: var(--shadow-xs); }
+
+.ritem-card[data-type="labor"] { border-left: 3px solid #EA580C; }
+.ritem-card[data-type="part"]  { border-left: 3px solid #2563EB; }
+
+.ritem-name-wrap, .ritem-price-wrap { margin: 0; }
+.ritem-name-wrap input, .ritem-price-wrap input {
+  border: 1.5px solid var(--input-border);
+  border-radius: var(--r-xs);
+  padding: 7px 10px;
+  font-size: 13.5px;
+  background: var(--input-bg);
+  margin-bottom: 0;
+}
+.ritem-price-wrap input { font-family: var(--font-mono); font-size: 13px; text-align: right; }
+
+.ritem-remove-btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: var(--r-pill);
+  border: 1.5px solid #FBCFE8;
+  background: var(--red-bg);
+  color: var(--red);
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  transition: background .14s, border-color .14s, transform .12s;
+  flex-shrink: 0;
+}
+.ritem-remove-btn:hover {
+  background: var(--red); border-color: var(--red); color: #fff; transform: translateY(-1px);
+}
+
+/* ── 15. Preview Panel ──────────────────────────────────────── */
+.preview-panel {
+  flex: 1.3 1 0;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 18px 0;
+  background: var(--bg);
+  border-left: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.preview-title { flex: 0 0 auto; align-items: center; margin-bottom: 0; padding-bottom: 14px; }
+
+.preview-title .section-kicker {
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+.preview-title .section-kicker::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22C55E;
+  flex: 0 0 8px;
+}
+.preview-title h2 { display: none; }
+
+.preview-actions { display: flex; align-items: center; gap: 4px; }
+
+.zoom-btn {
+  border: 1.5px solid var(--line-strong);
+  background: #fff;
+  color: var(--text);
+  min-width: 30px;
+  height: 30px;
+  border-radius: var(--r-sm);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  transition: background .12s, border-color .12s;
+}
+.zoom-btn:hover { background: var(--soft); }
+
+.fit-btn {
+  padding: 0 14px;
+  min-width: auto;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--btn-fill);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 2px 8px var(--brand-ring);
+}
+.fit-btn:hover { opacity: .9; background: var(--btn-fill); color: #fff; }
+
+.zoom-level {
+  min-width: 40px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+}
+
+.preview-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 20px;
+  background: #EDE0D8;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  border: 1px solid var(--line);
+  border-bottom: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+.preview-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.preview-scroll::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 99px; }
+
+.preview-canvas {
+  width: calc(794px * var(--preview-scale, 1));
+  min-height: calc(1123px * var(--preview-scale, 1));
+  margin: 0 auto;
+  position: relative;
+}
+
+#quotationPreview {
+  transform: scale(var(--preview-scale, 1));
+  transform-origin: top left;
+  width: 794px;
+}
+
+/* ── 16. Admin Modal ────────────────────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(10, 9, 20, .58);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.modal-backdrop.is-open { display: flex; }
+
+.admin-modal {
+  width: min(680px, 100%);
+  max-height: min(90vh, 860px);
+  overflow: auto;
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-xl);
+  padding: 34px;
+  animation: modalIn .22s var(--ease) both;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(14px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.admin-modal-view[hidden] { display: none !important; }
+
+.modal-lock-badge {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  margin-bottom: 14px;
+  color: #fff;
+  background: var(--btn-fill);
+  box-shadow: var(--shadow-sm);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-pill);
+  background: #fff;
+  color: var(--text);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  transition: background .12s, border-color .12s, transform .15s;
+}
+.modal-close-btn:hover { background: var(--soft); border-color: var(--line-strong); transform: rotate(90deg); }
+
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
+
+.modal-error {
+  color: var(--red);
+  font-size: 12.5px;
+  font-weight: 600;
+  min-height: 18px;
+  margin: 5px 0 0;
+}
+
+/* ── 17. PDF Export Rendering Fix ──────────────────────────── */
+body.vrxe-pdf-rendering #previewScroll,
+body.vrxe-pdf-rendering .preview-scroll {
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+body.vrxe-pdf-rendering .preview-panel {
+  overflow: visible !important;
+  height: auto !important;
+}
+body.vrxe-pdf-rendering #previewCanvas {
+  width: 794px !important;
+  min-height: 1123px !important;
+}
+body.vrxe-pdf-rendering #quotationPreview {
+  transform: none !important;
+  transform-origin: top left;
+}
+
+/* ── 18. Items Tab Desktop Scroll ───────────────────────────── */
+@media (min-width: 768px) {
+  #tab-items.is-active {
+    display: flex;
+    flex-direction: column;
+    max-height: none;
+    min-height: 0;
+  }
+  #tab-items.is-active .items-heading { flex: 0 0 auto; }
+  #tab-items.is-active .rq-unit-info-card,
+  #tab-items.is-active .section-title { flex: 0 0 auto; }
+}
+
+/* ── 19. Reduced Motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+/* ── Load Error Banner ──────────────────────────────────────── */
+.load-error {
+  margin: 16px 24px;
+  padding: 14px 18px;
+  border: 1.5px solid var(--text);
+  border-left: 4px solid var(--red);
+  border-radius: var(--r-md);
+  background: #fff;
+  font-weight: 700;
+  font-size: 13.5px;
+}

@@ -7,7 +7,7 @@
    - Navigation requests fall back to the cached home launcher
    ============================================================ */
 
-const VERSION       = "vrxe-suite-v1";
+const VERSION       = "vrxe-suite-v2";
 const SHELL_CACHE   = `${VERSION}-shell`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -61,7 +61,8 @@ const SHELL = [
   `${BASE}shared/assets/icon-maskable-512.png`,
   /* Features */
   ...FEATURE_FILES("quotation", "quotation.css"),
-  ...FEATURE_FILES("receipt", "receipt.css")
+  ...FEATURE_FILES("receipt", "receipt.css"),
+  ...FEATURE_FILES("repair-quotation", "repair.css")
 ];
 
 /* Install — cache the shell (best-effort, never fail the whole install) */
