@@ -52,16 +52,6 @@ App.updateTabProgress = () => {
     btn.classList.toggle("is-complete", isComplete);
   });
 
-  const adminButton = App.$("openAdminSettingsBtn");
-  if (adminButton) {
-    const number     = adminButton.querySelector(".tab-number");
-    const isComplete = App.isSectionComplete("payment") && App.isSectionComplete("terms");
-    if (number) {
-      number.textContent = isComplete ? "✓" : "!";
-      number.classList.toggle("is-complete", isComplete);
-    }
-    adminButton.classList.toggle("is-complete", isComplete);
-  }
 };
 
 App.setActiveTab = (tabName) => {

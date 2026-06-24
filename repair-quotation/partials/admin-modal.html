@@ -2,31 +2,8 @@
   <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
     <button id="closeAdminModalBtn" class="modal-close-btn" type="button" aria-label="Close admin editor">×</button>
 
-    <!-- Password gate -->
-    <div id="adminPasswordView" class="admin-modal-view">
-      <span class="modal-lock-badge" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-        </svg>
-      </span>
-      <h2 id="adminPasswordTitle">Unlock Payment &amp; Terms Editor</h2>
-      <p class="section-helper">Enter the admin password to edit payment details and warranty text.</p>
-
-      <label>Password
-        <input id="adminPasswordInput" type="password" placeholder="Enter password" autocomplete="current-password" />
-      </label>
-      <p id="adminPasswordError" class="modal-error" aria-live="polite"></p>
-
-      <div class="modal-actions">
-        <button id="cancelAdminModalBtn" class="ghost-btn" type="button">Cancel</button>
-        <button id="unlockAdminBtn" class="primary-btn" type="button">Unlock</button>
-      </div>
-    </div>
-
     <!-- Editor -->
-    <div id="adminEditorView" class="admin-modal-view" hidden>
+    <div id="adminEditorView" class="admin-modal-view">
       <p class="section-kicker">Admin Editable</p>
       <h2 id="adminModalTitle">Payment &amp; Terms Settings</h2>
       <p class="section-helper">These fields are pre-filled by default. Update them whenever needed.</p>

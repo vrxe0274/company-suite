@@ -1,23 +1,12 @@
-/* Client-side password — protects the admin UI only, not data.
-   Anyone with DevTools access can bypass this. Intentional for
-   a local static app with no server backend. */
-App.adminPassword   = "vrxeadmin";
 App.currentAdminTab = "payment";
 
 App.openAdminModal = () => {
-  const modal         = App.$("adminModal");
-  const passwordInput = App.$("adminPasswordInput");
-  const passwordError = App.$("adminPasswordError");
-
+  const modal = App.$("adminModal");
   if (!modal) return;
-
-  App.showAdminPasswordView();
-  if (passwordInput) passwordInput.value = "";
-  if (passwordError) passwordError.textContent = "";
 
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
-  setTimeout(() => passwordInput?.focus(), 40);
+  App.showAdminEditorView();
 };
 
 App.closeAdminModal = () => {
@@ -27,11 +16,6 @@ App.closeAdminModal = () => {
   modal.classList.remove("is-open");
   modal.setAttribute("aria-hidden", "true");
   App.renderPreview();
-};
-
-App.showAdminPasswordView = () => {
-  App.$("adminPasswordView")?.removeAttribute("hidden");
-  App.$("adminEditorView")?.setAttribute("hidden", "");
 };
 
 App.showAdminEditorView = () => {
@@ -52,34 +36,12 @@ App.setAdminModalTab = (tabName) => {
   App.$("adminFooterPanel")?.classList.toggle("is-active",  App.currentAdminTab === "footer");
 };
 
-App.unlockAdminModal = () => {
-  const passwordInput = App.$("adminPasswordInput");
-  const passwordError = App.$("adminPasswordError");
-  const password      = passwordInput?.value || "";
-
-  if (password !== App.adminPassword) {
-    if (passwordError) passwordError.textContent = "Incorrect password. Please try again.";
-    passwordInput?.focus();
-    passwordInput?.select();
-    return;
-  }
-
-  if (passwordError) passwordError.textContent = "";
-  App.showAdminEditorView();
-};
-
 App.bindAdminModal = () => {
   App.$("openAdminSettingsBtn")?.addEventListener("click", App.openAdminModal);
   App.$("closeAdminModalBtn")?.addEventListener("click", App.closeAdminModal);
-  App.$("cancelAdminModalBtn")?.addEventListener("click", App.closeAdminModal);
-  App.$("unlockAdminBtn")?.addEventListener("click", App.unlockAdminModal);
 
   document.querySelectorAll(".modal-tab-btn").forEach((btn) => {
     btn.addEventListener("click", () => App.setAdminModalTab(btn.dataset.adminTab));
-  });
-
-  App.$("adminPasswordInput")?.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") App.unlockAdminModal();
   });
 
   document.querySelectorAll(".close-admin-editor").forEach((btn) => {

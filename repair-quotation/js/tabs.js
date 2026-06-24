@@ -11,6 +11,7 @@ App.isFieldFilled = (fieldId) => {
 };
 
 App.isItemsSectionComplete = () => {
+  if (!App.isFieldFilled("itemsVerified")) return false;
   const items = App.getAllItems();
   return items.some((i) => i.name.trim() !== "" && i.price > 0);
 };
@@ -36,16 +37,6 @@ App.updateTabProgress = () => {
     btn.classList.toggle("is-complete", isComplete);
   });
 
-  const adminButton = App.$("openAdminSettingsBtn");
-  if (adminButton) {
-    const number     = adminButton.querySelector(".tab-number");
-    const isComplete = App.isFieldFilled("paymentBank") && App.isFieldFilled("paymentAccount");
-    if (number) {
-      number.textContent = isComplete ? "✓" : "!";
-      number.classList.toggle("is-complete", isComplete);
-    }
-    adminButton.classList.toggle("is-complete", isComplete);
-  }
 };
 
 App.setActiveTab = (tabName) => {

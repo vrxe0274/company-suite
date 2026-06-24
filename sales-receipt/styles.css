@@ -212,7 +212,7 @@ h1 {
 .tabs .sidebar-brand { display: none; }
 
 .tab-group-label {
-  margin: 14px 8px 6px;
+  margin: 0 8px 6px;
   color: var(--muted);
   font-size: 9px;
   font-weight: 700;

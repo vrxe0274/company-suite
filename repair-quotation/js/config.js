@@ -11,7 +11,8 @@ App.fields = [
   "clientName", "clientCompany", "clientAddress", "clientPhone",
   "unitName", "unitQty",
   "paymentBank", "paymentAccount", "paymentTerms",
-  "warrantyNote", "orderTerms", "warrantyApproval", "notesText"
+  "warrantyNote", "orderTerms", "warrantyApproval", "notesText",
+  "itemsVerified"
 ];
 
 App.tabOrder = ["quote", "client", "items"];
